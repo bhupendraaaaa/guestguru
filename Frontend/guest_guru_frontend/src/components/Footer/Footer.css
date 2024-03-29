@@ -1,0 +1,48 @@
+/* Add these styles to your existing CSS file or create a new one */
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+  }
+  
+  .footer {
+    max-width: 300px;
+  }
+  
+  .footer h3 {
+    color: #fff;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+
+  }
+  
+  .footer p {
+    font-size: 0.9em;
+    line-height: 1.4;
+    text-align: justify;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .footer ul{
+    margin-bottom: 5px;
+  }
+  
+  footer {
+    background-color: #222;
+    padding: 10px 0;
+    text-align: center;
+  }
+  
+  /* Optional: Add some hover effects to links */
+  .footer li:hover {
+    color: #ffffff;
+    cursor: pointer;
+  }
+  

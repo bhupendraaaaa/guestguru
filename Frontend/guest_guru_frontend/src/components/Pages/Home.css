@@ -1,0 +1,299 @@
+body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .hero{
+    background-image: url("../Assets/home1.jpg"); 
+    background-size: cover; 
+    background-position: center bottom; 
+    background-repeat: no-repeat; 
+    width: 100%;
+    height: 89vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    opacity: 0.8;
+    background-color: black;
+  }
+
+
+    .underline {
+      width: 80px;
+      height: 6px;
+      background: black;
+      border-radius: 9px;
+      margin: 0 50px; /* Add this line */
+    }
+
+  .container-home {
+    width: 70%;
+    margin: 0 auto; 
+    padding: 2rem; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+  }
+    
+  
+  .container-home h1 {
+    font-size: 40px;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px #000000;
+    
+    
+  }
+  
+  .container-home p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    text-align: justify;
+    text-shadow: 2px 2px 4px #000000;
+  }
+
+  .container-home h1 {
+    margin-top: 8rem;
+  }
+
+  .booking {
+    width: 100%; 
+    margin: 0px auto;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #dcd9d9;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    margin-top: 5rem;
+  }
+  
+  .booking {
+    display: flex; 
+    flex-wrap: nowrap; 
+    justify-content: space-between;
+  }
+
+  .booking:last-child {
+    align-items: flex-end;
+  }
+  
+  .booking-item {
+    margin-bottom: 0; /* Remove margin-bottom for elements in a row */
+    width: calc(30% - 20px); /* Adjust width based on number of items */
+  }
+  
+  .booking-item label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .booking-item input,
+  .booking-item select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+  }
+  
+  .booking button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top: 0; /* Remove margin-top for elements in a row */
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .booking button:hover {
+    background-color: #3e8e41;
+  }
+  
+  .booking-item label {
+    font-size: 1.2rem;
+  }
+
+  .container-home button:hover {
+    background-color: #ff00ff;
+  }
+
+  .container-home-about {
+    margin: 0 auto; 
+    padding: 3rem; 
+    display: flex;
+    flex-direction: column;
+    background-color: #dcd9d9;
+
+  }
+
+  .container-home-about button {
+    background-color: #c402ff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: fit-content;
+    font-size: 16px;
+  }
+
+  .container-home-about button:hover {
+    background-color: #ff00ff;
+  }
+
+  .container-home-about p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    text-align: justify;
+    width: 75%;
+  }
+ 
+  .container-home-about h2 {
+    font-size: 28px;
+    margin-bottom: 1rem;
+  }
+
+  .container-home-about .about-content {
+    /* width: 90%; */
+    margin: auto;
+    display: flex; 
+    align-items: center;
+    margin-bottom: 2rem; 
+    justify-content: space-between;
+  }
+  
+  .container-home-about .about-content div {
+    width: 300px; 
+    height: 300px; 
+    margin-right: 1rem;
+  }
+
+  .container-home-about .about-content img {
+    width: 110%; 
+    height: 110%; 
+  }
+
+  .events {
+    background-image: url("../Assets/event.jpg"); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    width: 100%;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    opacity: 1;
+  }
+
+  .container-home-event {
+    width: 70%;
+    margin: 0 auto; 
+    padding: 2rem; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+.container-home-event h2 {
+  font-size: 40px;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px #f1f1f1;
+}
+
+.container-home-event p {
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  text-align: justify;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 15px;
+  text-shadow: 2px 2px 4px #000000;
+  width: 70%;
+}
+
+.container-home-room {
+  width: 70%;
+  margin: 0 auto; 
+  padding: 2rem; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #dcd9d9;
+}
+
+.container-home-room h2 {
+  font-size: 40px;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px #ffffff;
+}
+
+.rooms-suites .container-home-room .gallery {
+  display: flex; 
+}
+
+.rooms-suites .container-home-room .gallery .gallery-item {
+  flex: 1; 
+  margin: 0.5rem; 
+}
+
+.rooms-suites .container-home-room .gallery .gallery-item img {
+  width: 100%; 
+  height: 30vh; 
+}
+
+.image-slider {
+  position: relative; /* Needed for proper button positioning */
+}
+
+.navigation-button {
+  position: absolute; /* Position buttons absolutely within the slider */
+  top: 285%; /* Vertical center */
+  padding: 1rem;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  color: white;
+  cursor: pointer; /* Indicate clickable element */
+}
+
+.navigation-button:hover {
+  background-color: rgba(0, 0, 0, 0.8); /* Darken on hover */
+}
+
+.prev-button {
+  left: 7rem; /* Position left button */
+}
+
+.next-button {
+  right: 7rem; /* Position right button */
+}
+
+
+
+
+
+
+
+
+    
+  
+  
+  
+  
