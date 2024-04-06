@@ -10,7 +10,7 @@ class Room(models.Model):
     capacity = models.PositiveIntegerField()
     price = models.FloatField()
     description = models.TextField(null=True, blank=True) 
-    image = models.ImageField( null=True, blank=True) 
+    image = models.ImageField( null=True) 
 
 
 class Booking(models.Model):
