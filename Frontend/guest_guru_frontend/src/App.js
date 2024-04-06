@@ -8,6 +8,10 @@ import Navbar from './components/Navbar/Navbar';
 import Rooms from './components/Pages/Rooms';
 import Footer from './components/Footer/Footer';
 import Description from './components/Description/Description';
+import Contact from './components/ContactUS/Contact';
+import Dashboard from './components/Admin/Dashboard';
+import RoomDash from './components/Admin/Room-Dash';
+
 
 
 function App() {
@@ -22,6 +26,9 @@ function App() {
       <Route path='/login' element={<Login/>}/>
       <Route path='/register' element={<Register/>}/>
       <Route path='/description/:id' element={<Description/>}/>
+      <Route path='/dashboard' element={<Dashboard/>}/>
+      <Route path='/contact_us' element={<Contact/>}/>
+      <Route path='/room_dash' element={<RoomDash/>}/>
       </Routes>
       <Footer/>
     </Router>

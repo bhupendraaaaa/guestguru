@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './Room.css';
-import room1 from '../Assets/Deluxe Ensuite Room.jpg';
-import room2 from '../Assets/standard room.jpg';
-import room3 from '../Assets/deluxe queen room.jpg';
-import room4 from '../Assets/double bedroom.jpg';
-import room5 from '../Assets/Ensuite Room.jpg';
-import room6 from '../Assets/king ensuite bedroom.jpg';
-import room7 from '../Assets/King Room.jpg';
-import room8 from '../Assets/normal room.jpg';
 function Rooms() {
     const [rooms, setRooms] = useState([]);
     useEffect(() => {

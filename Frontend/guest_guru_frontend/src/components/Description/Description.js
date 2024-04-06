@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import logoimage from '../Assets/3.png';
 import {useParams} from 'react-router-dom';
 
 
@@ -26,7 +25,7 @@ function Description() {
                     <div className="col">
                         <img src={room.image} alt="Room" className="img-fluid" />
                     </div>
-                    <div className="col ">
+                    <div className="col">
                         <h2>{room.room_type}</h2>
                         <p>{room.description}</p>
                         <ul>

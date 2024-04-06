@@ -7,7 +7,7 @@ function Navbar() {
   const location = useLocation();
 
   // Check if the current route is not login or register
-  const shouldDisplayNavbar = !['/login', '/register'].includes(location.pathname);
+  const shouldDisplayNavbar = !['/login', '/register', '/dashboard', '/room_dash'].includes(location.pathname);
 
   return (
     shouldDisplayNavbar && (
@@ -31,7 +31,7 @@ function Navbar() {
             <Link to="/event">Event</Link>
           </li>
           <li>
-            <Link to="/contact">Contact us</Link>
+            <Link to="/contact_us">Contact us</Link>
           </li>
           <li>
             <Link to="/login">Login</Link>

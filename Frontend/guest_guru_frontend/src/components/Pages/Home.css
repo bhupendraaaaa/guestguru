@@ -89,8 +89,9 @@ body {
   
   .booking-item label {
     display: block;
-    font-weight: bold;
+    font-weight: 400;
     margin-bottom: 5px;
+    color: #000000;
   }
   
   .booking-item input,
@@ -100,6 +101,8 @@ body {
     border: 1px solid #ccc;
     border-radius: 3px;
     box-sizing: border-box;
+    margin-right: 70px;
+    font-size: 18px;
   }
   
   .booking button {
@@ -148,7 +151,7 @@ body {
   }
 
   .container-home-about button:hover {
-    background-color: #ff00ff;
+    background-color: #c402ff;
   }
 
   .container-home-about p {
@@ -165,7 +168,6 @@ body {
   }
 
   .container-home-about .about-content {
-    /* width: 90%; */
     margin: auto;
     display: flex; 
     align-items: center;
@@ -284,6 +286,8 @@ body {
 .next-button {
   right: 7rem; /* Position right button */
 }
+
+
 
 
 
