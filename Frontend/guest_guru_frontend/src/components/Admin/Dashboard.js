@@ -11,7 +11,7 @@ function Dashboard() {
           <li><a href=""  className='active'>Dashboard</a></li>
           <li><a href="/room_dash">Rooms</a></li>
           <li><a href="#">Event List</a></li>
-          <li><a href="#">User List</a></li>
+          <li><a href="/user">User List</a></li>
           <li><a href="#">Bookings</a></li>
         </ul>
       </div>

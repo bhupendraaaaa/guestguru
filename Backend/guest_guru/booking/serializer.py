@@ -10,3 +10,8 @@ class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         fields = ('id', 'room_type', 'room_no', 'capacity', 'price', 'description', 'image')
+
+class RoomEditSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Room
+        fields = ('id', 'room_type', 'room_no', 'capacity', 'price', 'description', 'image')

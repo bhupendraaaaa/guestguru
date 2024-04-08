@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 
 function App() {
+  const [roomList, setRoomList] = useState([]);
   const [rooms, setRooms] = useState([]);
   const [roomName, setRoomName] = useState([]);
   const [roomImage, setRoomImage] = useState("");
@@ -12,7 +13,6 @@ function App() {
   const [roomCapacity, setRoomCapacity] = useState([]);
   const [roomDescription, setRoomDescription] = useState([]);
   const [roomNumber, setRoomNumber] = useState([]);
-
 
   useEffect(() => {
     const getRooms = async () => {
@@ -36,14 +36,14 @@ function App() {
     formData.append('capacity', roomCapacity);
     formData.append('description', roomDescription);
     formData.append('room_no', roomNumber);
-    formData.append('image',roomImage)
+    formData.append('image', roomImage)
 
     let addRoom = 'http://localhost:8000/book/room/'
 
     let addRoomResponse = await fetch(addRoom, {
       method: 'POST',
       body: formData,
-      credentials:'include'
+      credentials: 'include'
     });
 
     let parsedData = await addRoomResponse.json();
@@ -79,6 +79,47 @@ function App() {
     }
   }
 
+  const fetchRoomList = () => {
+    fetch('http://localhost:8000/book/room/')
+      .then(response => response.json())
+      .then(data => {
+        setRoomList(data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+  const handleEdit = (roomId) => {
+    fetch(`http://127.0.0.1:8000/book/edit/${roomId}/`)
+      .then(response => response.json())
+      .then(data => {
+        setRoomName(data.room_type);
+        setRoomPrice(data.price);
+        setRoomCapacity(data.capacity);
+        setRoomDescription(data.description);
+        setRoomNumber(data.room_no);
+        setRoomImage(data.image);
+      });
+  }
+
+  const handleDelete = (roomId) => {
+    fetch(`http://localhost:8000/book/room/${roomId}/`, {
+      method: 'DELETE',
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      // Optionally, refresh the room list after a successful delete
+      fetchRoomList();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+
+
   return (
     <div className="App">
       <div className="sidebar">
@@ -103,15 +144,14 @@ function App() {
                 <Form.Control type="text" placeholder="Enter room name" value={roomName} onChange={(e) => setRoomName(e.target.value)} />
               </Form.Group>
             </div>
-            <div className="col">
-              <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
-                <Form.Label>Room Image</Form.Label>
-                <Form.Control type="file" value={roomImage} onChange={(e) => {
-                      let file = e.target.files[0];
-                      setRoomImage(file)
+            <div className="mb-3">
+              <label for="formFile" className="form-label">Room Image</label>
+              <input className="form-control" type="file" id="formFile" onChange={
+                (e) => {
+                  let file = e.target.files[0];
+                  setRoomImage(file)
                 }
-                  } />
-              </Form.Group>
+              } />
             </div>
           </div>
 
@@ -174,8 +214,8 @@ function App() {
                 <td>{room.price}</td>
                 <td>{room.capacity}</td>
                 <td>{room.description}</td>
-                <td><Button variant="primary">Edit</Button></td>
-                <td><Button variant="danger">Delete</Button></td>
+                <td><Button variant="primary" onClick={handleEdit}>Edit</Button></td>
+                <td><Button variant="danger" onClick={handleDelete}>Delete</Button></td>
               </tr>
             ))}
           </tbody>

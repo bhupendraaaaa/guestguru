@@ -25,7 +25,7 @@ function Navbar() {
             <Link to="/room">Rooms & Suits</Link>
           </li>
           <li>
-            <Link to="/services">Facilities</Link>
+            <Link to="/facilities">Facilities</Link>
           </li>
           <li>
             <Link to="/event">Event</Link>

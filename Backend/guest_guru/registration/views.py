@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
-
+from .verify import verify_access_token
 
 # Create your views here.
 
@@ -38,3 +38,36 @@ class UserLoginView(APIView):
             else:
                 return Response({"msg":"Invalid Id or Password"}, status=status.HTTP_404_NOT_FOUND)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+class UserLogoutView(APIView):
+    def post(self, request):
+        response = Response()
+        response.delete_cookie('token')
+        response.data = {'msg':'Logout Successful'}
+        return response
+    
+class UserDetailView(APIView):
+    def get(self, request, *args, **kwargs):
+        token = request.COOKIES.get('token', None)
+        verification, payload = verify_access_token(token)
+        if verification:
+            user = User.objects.filter(id=kwargs['id'])
+            serializer = UserModelSerializer(user, many=True, context={'request':request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({'msg':'Login First'}, status=status.HTTP_401_UNAUTHORIZED)
+    
+class AllUsersview(APIView):
+    def get(self, request, *args, **kwargs):
+        token = request.COOKIES.get('token', None)
+        verification, payload = verify_access_token(token)
+        if verification:
+            user = User.objects.all()
+            serializer = UserModelSerializer(user, many=True, context={'request':request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({'msg':'Login First'}, status=status.HTTP_401_UNAUTHORIZED)
+    
+
+    
+    
+
+
+      

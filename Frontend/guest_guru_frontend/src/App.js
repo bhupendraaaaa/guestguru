@@ -11,6 +11,10 @@ import Description from './components/Description/Description';
 import Contact from './components/ContactUS/Contact';
 import Dashboard from './components/Admin/Dashboard';
 import RoomDash from './components/Admin/Room-Dash';
+import Userlist from './components/Admin/Userlist';
+import Facilities from './components/Facilities/Facilities';
+
+
 
 
 
@@ -29,6 +33,8 @@ function App() {
       <Route path='/dashboard' element={<Dashboard/>}/>
       <Route path='/contact_us' element={<Contact/>}/>
       <Route path='/room_dash' element={<RoomDash/>}/>
+      <Route path='/user' element={<Userlist/>}/>
+      <Route path='/facilities' element={<Facilities/>}/>
       </Routes>
       <Footer/>
     </Router>
