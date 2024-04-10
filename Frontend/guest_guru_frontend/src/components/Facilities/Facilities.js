@@ -23,7 +23,7 @@ function Facilities() {
             </div>
             <p>Description</p>
           </div>
-          </div>
+        </div>
           
       </section>
     </>

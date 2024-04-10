@@ -78,7 +78,7 @@ function Home() {
                 <input type="number" id="guests" value={guest_count} onChange={(e) => setGuestCount(e.target.value)} />
               </div>
               <div className="booking-item">
-                <label htmlFor="Type">Type</label>
+                <label htmlFor="Type">Room Category</label>
                 <select id="Type" value={room_type} onChange={(e) => setRoomType(e.target.value)}>
                   <option value="8">Single</option>
                   <option value="4">Double</option>

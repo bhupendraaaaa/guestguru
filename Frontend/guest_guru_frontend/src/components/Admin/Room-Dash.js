@@ -126,10 +126,10 @@ function App() {
         <h3 className="sidebar-heading">Admin Panel</h3>
         <ul className="sidebar-menu">
           <li><a href="/dashboard">Dashboard</a></li>
-          <li><a href="#" className='active'>Rooms</a></li>
+          <li><a href="room-dash" className='active'>Rooms</a></li>
           <li><a href="#">Event List</a></li>
-          <li><a href="#">User List</a></li>
-          <li><a href="#">Bookings</a></li>
+          <li><a href="/user">User List</a></li>
+          <li><a href="/booking">Bookings</a></li>
         </ul>
       </div>
 

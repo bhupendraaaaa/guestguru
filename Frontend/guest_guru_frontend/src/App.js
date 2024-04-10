@@ -13,6 +13,7 @@ import Dashboard from './components/Admin/Dashboard';
 import RoomDash from './components/Admin/Room-Dash';
 import Userlist from './components/Admin/Userlist';
 import Facilities from './components/Facilities/Facilities';
+import BookingList from './components/Admin/BookingList';
 
 
 
@@ -32,9 +33,10 @@ function App() {
       <Route path='/description/:id' element={<Description/>}/>
       <Route path='/dashboard' element={<Dashboard/>}/>
       <Route path='/contact_us' element={<Contact/>}/>
-      <Route path='/room_dash' element={<RoomDash/>}/>
+      <Route path='/room-dash' element={<RoomDash/>}/>
       <Route path='/user' element={<Userlist/>}/>
       <Route path='/facilities' element={<Facilities/>}/>
+      <Route path='/booking' element={<BookingList/>}/>
       </Routes>
       <Footer/>
     </Router>

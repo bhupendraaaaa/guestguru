@@ -9,10 +9,10 @@ function Dashboard() {
         <h3 className="sidebar-heading">Admin Panel</h3>
         <ul className="sidebar-menu">
           <li><a href=""  className='active'>Dashboard</a></li>
-          <li><a href="/room_dash">Rooms</a></li>
+          <li><a href="/room-dash">Rooms</a></li>
           <li><a href="#">Event List</a></li>
           <li><a href="/user">User List</a></li>
-          <li><a href="#">Bookings</a></li>
+          <li><a href="/booking">Bookings</a></li>
         </ul>
       </div>
         
