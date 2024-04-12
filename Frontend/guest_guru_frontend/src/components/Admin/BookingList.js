@@ -150,7 +150,7 @@ function BookingList() {
                 {bookingList.map((booking) => ( 
                     <tr key={booking.id}>
                         <td>{booking.id}</td>
-                        <td>{booking.room_type}</td>
+                        <td>{booking.room.room_type}</td>
                         <td>{booking.check_in}</td>
                         <td>{booking.check_out}</td>
                         <td>{booking.guest_count}</td>

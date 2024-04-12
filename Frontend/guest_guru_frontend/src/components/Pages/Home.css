@@ -104,6 +104,10 @@ body {
     margin-right: 70px;
     font-size: 18px;
   }
+
+  .booking-item select {
+    height: 2.75rem;
+  }
   
   .booking button {
     background-color: #4CAF50; /* Green */
