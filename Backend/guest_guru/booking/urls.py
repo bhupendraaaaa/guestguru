@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import BookingView, BookingDetailView, RoomView, RoomDetailView, AvailableRoomsView, RoomEditView, RoomDeleteView, AllBookingDetailsView
+from .views import BookingView, BookingDetailView, RoomView, RoomDetailView, AvailableRoomsView, RoomEditView, RoomDeleteView
 from rest_framework.routers import DefaultRouter
 
 urlpatterns = [
@@ -10,6 +10,5 @@ urlpatterns = [
     path('available-room/', AvailableRoomsView.as_view()),
     path('edit/<int:id>/', RoomEditView.as_view()),
     path('delete/<int:id>/', RoomDeleteView.as_view()),
-    path('all-booking/', AllBookingDetailsView.as_view()),
     
 ]

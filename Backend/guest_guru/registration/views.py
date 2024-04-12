@@ -29,8 +29,10 @@ class UserLoginView(APIView):
                 refresh = RefreshToken.for_user(user=user)
                 if user.role.lower() == 'staff':
                     refresh['role'] = 'staff'
-                else:
+                elif user.role.lower() == 'guest':
                     refresh['role'] = 'guest'
+                else:
+                    refresh['role'] = 'admin'
                 access_token = str(refresh.access_token)
                 response= Response({'msg':'Login Successful','token':access_token}, status=status.HTTP_200_OK)
                 response.set_cookie(key='token', value=access_token, secure=True, httponly=True, samesite='None')
@@ -64,7 +66,26 @@ class AllUsersview(APIView):
             serializer = UserModelSerializer(user, many=True, context={'request':request})
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response({'msg':'Login First'}, status=status.HTTP_401_UNAUTHORIZED)
+
+class AdminCheck(APIView):
+    def get(self, request):
+        token = request.COOKIES.get('token', None)
+        verification, payload = verify_access_token(token)
+        if verification:
+            if payload['role'] == 'admin':
+                return Response({'msg':'Admin'}, status=status.HTTP_200_OK)
+            return Response({'msg':'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'msg':'Not Logged In'}, status=status.HTTP_401_UNAUTHORIZED)
     
+class UserCheck(APIView):
+    def get(self, request):
+        token = request.COOKIES.get('token', None)
+        verification, payload = verify_access_token(token)
+        if verification:
+            if payload['role'] == 'admin' or payload['role'] == 'guest':
+                return Response({'msg':'Admin'}, status=status.HTTP_200_OK)
+            return Response({'msg':'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'msg':'Not Logged In'}, status=status.HTTP_401_UNAUTHORIZED)
 
     
     

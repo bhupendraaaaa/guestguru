@@ -2,6 +2,7 @@
 import './App.css';
 import Login from './components/LoginSignup/Login';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+//import SnackBar from './components/SnackBar/SnackBar';
 import Register from './components/LoginSignup/Register';
 import Home from './components/Pages/Home';
 import Navbar from './components/Navbar/Navbar';
@@ -20,6 +21,19 @@ import BookingList from './components/Admin/BookingList';
 
 
 function App() {
+  // const [snackbarOpen, setSnackbarOpen] = useState(false);
+  // const [snackbarMessage, setSnackbarMessage] = useState('');
+
+
+  // const openSnackbar = (message) => {
+  //   setSnackbarMessage(message);
+  //   setSnackbarOpen(true);
+  // };
+
+  // const closeSnackbar = () => {
+  //   setSnackbarOpen(false);
+  // }
+
   return (
     <div>
     <Router>
@@ -40,6 +54,7 @@ function App() {
       </Routes>
       <Footer/>
     </Router>
+    {/* <SnackBar open={snackbarOpen} message={snackbarMessage} handleClose={closeSnackbar}/> */}
       
       
       

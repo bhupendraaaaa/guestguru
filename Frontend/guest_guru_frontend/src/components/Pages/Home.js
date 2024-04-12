@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Home.css';
 import backGround from '../Assets/about.jpg';
 import roomFirst from '../Assets/room1.jpg';
 import roomSecond from '../Assets/room2.jpg';
 import roomThird from '../Assets/room3.jpg';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 
 function Home() {
+  const navigate = useNavigate();
   const [bookings, setBookings] = useState();
   const [check_in, setCheckIn] = useState();
   const [check_out, setCheckOut] = useState();
   const [guest_count, setGuestCount] = useState();
   const [room_type, setRoomType] = useState();
+
+  useEffect(() => {navigate('/')}, []);
 
   const handleBooking = async (e) => {
     e.preventDefault();
@@ -67,19 +71,19 @@ function Home() {
             <div className="booking">
               <div className="booking-item">
                 <label htmlFor="check-in">Check-in</label>
-                <input type="date" id="check-in" value={check_in} onChange={(e) => setCheckIn(e.target.value)} />
+                <input required type="date" id="check-in" value={check_in} onChange={(e) => setCheckIn(e.target.value)} />
               </div>
               <div className="booking-item">
                 <label htmlFor="check-out">Check-out</label>
-                <input type="date" id="check-out" value={check_out} onChange={(e) => setCheckOut(e.target.value)} />
+                <input required type="date" id="check-out" value={check_out} onChange={(e) => setCheckOut(e.target.value)} />
               </div>
               <div className="booking-item">
                 <label htmlFor="guests">No. of Guests</label>
-                <input type="number" id="guests" value={guest_count} onChange={(e) => setGuestCount(e.target.value)} />
+                <input required type="number" id="guests" value={guest_count} onChange={(e) => setGuestCount(e.target.value)} />
               </div>
               <div className="booking-item">
                 <label htmlFor="Type">Room Category</label>
-                <select id="Type" value={room_type} onChange={(e) => setRoomType(e.target.value)}>
+                <select required id="Type" value={room_type} onChange={(e) => setRoomType(e.target.value)}>
                   <option value="8">Single</option>
                   <option value="4">Double</option>
                   <option value="5">King Sized</option>

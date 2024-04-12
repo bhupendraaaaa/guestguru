@@ -15,6 +15,7 @@ function BookingList() {
         const getBookingList = async () => {
             const response = await fetch('http://localhost:8000/book/booking/');
             const data = await response.json();
+            console.log(data);
             
             if (Array.isArray(data)) {
                 setBookingList(data);
@@ -78,7 +79,7 @@ function BookingList() {
         </h3>
         <ul className="sidebar-menu">
           <li><a href='/dashboard'>Dashboard</a></li>
-          <li><a href='/room'>Rooms</a></li>
+          <li><a href='/room-dash'>Rooms</a></li>
           <li><a href='/booking'>Bookings</a></li>
           <li><a href=''>User List</a></li>
         </ul>

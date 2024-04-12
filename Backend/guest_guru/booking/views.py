@@ -173,15 +173,4 @@ class RoomDeleteView(APIView):
             return Response({'msg': 'Deleted'}, status=status.HTTP_200_OK)
         return Response({'msg': 'Login First'}, status=status.HTTP_401_UNAUTHORIZED)
     
-class AllBookingDetailsView(APIView):
-
-    def get(self, request):
-        token = request.COOKIES.get('token')
-        verification, payload = verify_access_token(token)
-        if verification:
-            booking = Booking.objects.all()
-            serializer = BookingSerializer(booking, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response({'msg': 'Login First'}, status=status.HTTP_401_UNAUTHORIZED)
-
-    
+  
