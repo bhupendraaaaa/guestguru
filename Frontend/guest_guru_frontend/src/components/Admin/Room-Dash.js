@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import './Dashboard.css';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Table from 'react-bootstrap/Table';
+import React, { useState, useEffect } from "react";
+import "./Dashboard.css";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Table from "react-bootstrap/Table";
+import Modal from "react-bootstrap/Modal";
 
 function App() {
   const [roomList, setRoomList] = useState([]);
@@ -13,14 +14,15 @@ function App() {
   const [roomCapacity, setRoomCapacity] = useState([]);
   const [roomDescription, setRoomDescription] = useState([]);
   const [roomNumber, setRoomNumber] = useState([]);
+  const [modelIsOpen, setModelIsOpen] = useState(false);
 
   useEffect(() => {
     const getRooms = async () => {
-      const response = await fetch('http://localhost:8000/book/room/');
+      const response = await fetch("http://localhost:8000/book/room/");
       const data = await response.json();
       setRooms(data);
       console.log(data);
-    }
+    };
     getRooms();
   }, []);
 
@@ -28,72 +30,67 @@ function App() {
     e.preventDefault();
 
     let formData = new FormData();
-    formData.append('room_type', roomName);
+    formData.append("room_type", roomName);
     if (roomImage && roomImage.length > 0) {
-      formData.append('image', roomImage[0]);
+      formData.append("image", roomImage[0]);
     }
-    formData.append('price', roomPrice);
-    formData.append('capacity', roomCapacity);
-    formData.append('description', roomDescription);
-    formData.append('room_no', roomNumber);
-    formData.append('image', roomImage)
+    formData.append("price", roomPrice);
+    formData.append("capacity", roomCapacity);
+    formData.append("description", roomDescription);
+    formData.append("room_no", roomNumber);
+    formData.append("image", roomImage);
 
-    let addRoom = 'http://localhost:8000/book/room/'
+    let addRoom = "http://localhost:8000/book/room/";
 
     let addRoomResponse = await fetch(addRoom, {
-      method: 'POST',
+      method: "POST",
       body: formData,
-      credentials: 'include'
+      credentials: "include",
     });
 
     let parsedData = await addRoomResponse.json();
     console.log(parsedData);
-    console.log(formData)
+    console.log(formData);
 
     if (addRoomResponse.status === 201) {
-      alert('Room Added Successfully');
+      alert("Room Added Successfully");
       // setRoomName('');
       // setRoomImage('');
       // setRoomPrice('');
       // setRoomCapacity('');
       // setRoomDescription('');
       // return;
-    }
-
-    else {
+    } else {
       if (parsedData.room_type) {
         alert(parsedData.room_type);
-      }
-      else if (parsedData.image) {
+      } else if (parsedData.image) {
         alert(parsedData.image);
-      }
-      else if (parsedData.price) {
+      } else if (parsedData.price) {
         alert(parsedData.price);
-      }
-      else if (parsedData.capacity) {
+      } else if (parsedData.capacity) {
         alert(parsedData.capacity);
-      }
-      else if (parsedData.description) {
+      } else if (parsedData.description) {
         alert(parsedData.description);
       }
     }
-  }
+  };
 
   const fetchRoomList = () => {
-    fetch('http://localhost:8000/book/room/')
-      .then(response => response.json())
-      .then(data => {
+    fetch("http://localhost:8000/book/room/")
+      .then((response) => response.json())
+      .then((data) => {
         setRoomList(data);
       })
-      .catch(error => {
-        console.error('Error:', error);
+      .catch((error) => {
+        console.error("Error:", error);
       });
-  }
+  };
+
 
   const handleEdit = (roomId) => {
     fetch(`http://127.0.0.1:8000/book/edit/${roomId}/`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         setRoomName(data.room_type);
         setRoomPrice(data.price);
         setRoomCapacity(data.capacity);
@@ -101,86 +98,156 @@ function App() {
         setRoomNumber(data.room_no);
         setRoomImage(data.image);
       });
-  }
+  };
 
   const handleDelete = (roomId) => {
     fetch(`http://localhost:8000/book/room/${roomId}/`, {
-      method: 'DELETE',
+      method: "DELETE",
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      // Optionally, refresh the room list after a successful delete
-      fetchRoomList();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-  }
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        // Optionally, refresh the room list after a successful delete
+        fetchRoomList();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
+  const openModal = (room) => {
+    setModelIsOpen(true);
+    setRoomName(room.room_type);
+    setRoomPrice(room.price);
+    setRoomCapacity(room.capacity);
+    setRoomDescription(room.description);
+    setRoomNumber(room.room_no);
+  };
+
+  const closeModal = () => {
+    setModelIsOpen(false);
+  };
 
   return (
     <div className="App">
       <div className="sidebar">
         <h3 className="sidebar-heading">Admin Panel</h3>
         <ul className="sidebar-menu">
-          <li><a href="/dashboard">Dashboard</a></li>
-          <li><a href="room-dash" className='active'>Rooms</a></li>
-          <li><a href="#">Event List</a></li>
-          <li><a href="/user">User List</a></li>
-          <li><a href="/booking">Bookings</a></li>
+          <li>
+            <a href="/dashboard">Dashboard</a>
+          </li>
+          <li>
+            <a href="room-dash" className="active">
+              Rooms
+            </a>
+          </li>
+          <li>
+            <a href="#">Event List</a>
+          </li>
+          <li>
+            <a href="/user">User List</a>
+          </li>
+          <li>
+            <a href="/booking">Bookings</a>
+          </li>
         </ul>
       </div>
 
       <div className="content">
-        <h2 className='mb-3 text-start'>Add Room</h2>
+        <h2 className="mb-3 text-start">Add Room</h2>
 
         <Form>
           <div className="row">
             <div className="col">
-              <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
-                <Form.Label >Room Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter room name" value={roomName} onChange={(e) => setRoomName(e.target.value)} />
+              <Form.Group
+                className="mb-3 text-start"
+                controlId="formBasicEmail"
+              >
+                <Form.Label>Room Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter room name"
+                  value={roomName}
+                  onChange={(e) => setRoomName(e.target.value)}
+                />
               </Form.Group>
             </div>
             <div className="mb-3">
-              <label for="formFile" className="form-label">Room Image</label>
-              <input className="form-control" type="file" id="formFile" onChange={
-                (e) => {
+              <label for="formFile" className="form-label">
+                Room Image
+              </label>
+              <input
+                className="form-control"
+                type="file"
+                id="formFile"
+                onChange={(e) => {
                   let file = e.target.files[0];
-                  setRoomImage(file)
-                }
-              } />
+                  setRoomImage(file);
+                }}
+              />
             </div>
           </div>
 
           <div className="row">
             <div className="col">
-              <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
+              <Form.Group
+                className="mb-3 text-start"
+                controlId="formBasicEmail"
+              >
                 <Form.Label>Room Price</Form.Label>
-                <Form.Control type="text" placeholder="Enter room price" value={roomPrice} onChange={(e) => setRoomPrice(e.target.value)} />
+                <Form.Control
+                  type="text"
+                  placeholder="Enter room price"
+                  value={roomPrice}
+                  onChange={(e) => setRoomPrice(e.target.value)}
+                />
               </Form.Group>
             </div>
             <div className="col">
-              <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
+              <Form.Group
+                className="mb-3 text-start"
+                controlId="formBasicEmail"
+              >
                 <Form.Label>Room Capacity</Form.Label>
-                <Form.Control type="text" placeholder="Enter room capacity" value={roomCapacity} onChange={(e) => setRoomCapacity(e.target.value)} />
+                <Form.Control
+                  type="text"
+                  placeholder="Enter room capacity"
+                  value={roomCapacity}
+                  onChange={(e) => setRoomCapacity(e.target.value)}
+                />
               </Form.Group>
             </div>
           </div>
 
           <div className="row">
             <div className="col">
-              <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
+              <Form.Group
+                className="mb-3 text-start"
+                controlId="formBasicEmail"
+              >
                 <Form.Label>Room No.</Form.Label>
-                <Form.Control type='number' placeholder="Enter room number" value={roomNumber} onChange={(e) => setRoomNumber(e.target.value)} />
+                <Form.Control
+                  type="number"
+                  placeholder="Enter room number"
+                  value={roomNumber}
+                  onChange={(e) => setRoomNumber(e.target.value)}
+                />
               </Form.Group>
             </div>
             <div className="col">
-              <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
+              <Form.Group
+                className="mb-3 text-start"
+                controlId="formBasicEmail"
+              >
                 <Form.Label>Room Description</Form.Label>
-                <Form.Control as="textarea" rows={3} placeholder="Enter room description" value={roomDescription} onChange={(e) => setRoomDescription(e.target.value)} />
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  placeholder="Enter room description"
+                  value={roomDescription}
+                  onChange={(e) => setRoomDescription(e.target.value)}
+                />
               </Form.Group>
             </div>
           </div>
@@ -190,17 +257,19 @@ function App() {
           </Button>
         </Form>
 
-        <h2 className='mt-5 mb-3 text-start'>Room Details</h2>
+        <h2 className="mt-5 mb-3 text-start">Room Details</h2>
 
         <Table responsive>
           <thead>
             <tr>
               <th>ID</th>
+              <th>Room No.</th>
               <th>Room Name</th>
               <th>Room Image</th>
               <th>Room Price</th>
               <th>Room Capacity</th>
               <th>Room Description</th>
+              
               <th colSpan={2}>Action</th>
             </tr>
           </thead>
@@ -209,17 +278,105 @@ function App() {
             {rooms.map((room) => (
               <tr key={room.id}>
                 <td>{room.id}</td>
+                <td>{room.room_no}</td>
                 <td>{room.room_type}</td>
-                <td><img src={room.image} alt="Room 1" width={'200px'} /></td>
+                <td>
+                  <img src={room.image} alt="Room 1" width={"200px"} />
+                </td>
                 <td>{room.price}</td>
                 <td>{room.capacity}</td>
                 <td>{room.description}</td>
-                <td><Button variant="primary" onClick={handleEdit}>Edit</Button></td>
+                <td><Button variant="primary" onClick={() => openModal(room)} >Edit</Button></td>
                 <td><Button variant="danger" onClick={handleDelete}>Delete</Button></td>
               </tr>
             ))}
           </tbody>
         </Table>
+
+        <div className="modal">
+          {/* <button variant="Primary" onClick={openModal}>
+            Edit
+          </button> */}
+          <Modal show={modelIsOpen} onHide={closeModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Edit Room</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Form.Group
+                  className="mb-3 text-start"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Room Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter room name"
+                    value={roomName}
+                    onChange={(e) => setRoomName(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group
+                  className="mb-3 text-start"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Room Price</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter room price"
+                    value={roomPrice}
+                    onChange={(e) => setRoomPrice(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group
+                  className="mb-3 text-start"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Room Capacity</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter room capacity"
+                    value={roomCapacity}
+                    onChange={(e) => setRoomCapacity(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group
+                  className="mb-3 text-start"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Room No.</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Enter room number"
+                    value={roomNumber}
+                    onChange={(e) => setRoomNumber(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group
+                  className="mb-3 text-start"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Room Description</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    placeholder="Enter room description"
+                    value={roomDescription}
+                    onChange={(e) => setRoomDescription(e.target.value)}
+                  />
+                </Form.Group>
+                <Button variant="primary"  onClick={handleEdit(roomId)}>
+                  Submit
+                </Button>
+              </Form>
+            </Modal.Body>
+          </Modal>
+        </div>
+
+        {/* <Modal>
+          isOpen={modelIsOpen}
+          onRequestClose={closeModal}
+
+        </Modal> */}
       </div>
     </div>
   );

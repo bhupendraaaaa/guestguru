@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 function BookingList() {
     const [bookingList, setBookingList] = useState([]);
@@ -10,6 +11,7 @@ function BookingList() {
     const [checkInDate, setCheckInDate] = useState([]);
     const [checkOutDate, setCheckOutDate] = useState([]);
     const [guestCount, setGuestCount] = useState([]);
+    const [modelIsOpen, setModelIsOpen] = useState(false);
 
     useEffect(() => {
         const getBookingList = async () => {
@@ -69,6 +71,19 @@ function BookingList() {
 
     }
 
+    }
+
+    const openModal = () => {
+        setModelIsOpen(true);
+        // setRoomType(booking.room.room_type);
+        // setCheckInDate(booking.check_in);
+        // setCheckOutDate(booking.check_out);
+        // setGuestCount(booking.guest_count);
+
+    }
+
+    const closeModal = () => {
+        setModelIsOpen(false);
     }
 
   return (
@@ -154,12 +169,46 @@ function BookingList() {
                         <td>{booking.check_in}</td>
                         <td>{booking.check_out}</td>
                         <td>{booking.guest_count}</td>
-                        <td><Button variant="primary">Edit</Button></td>
+                        <td><Button variant="primary" onClick={() => openModal()}>Edit</Button></td>
                         <td><Button variant="danger">Delete</Button></td>
                     </tr>
                 ))}
             </tbody>
         </Table>
+        <div className="modal">
+          <Modal show={modelIsOpen} onHide={closeModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Edit Booking</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
+                <Form.Label>Room Type</Form.Label>
+                <Form.Control type="text" placeholder="Enter Room Type" value={roomType} onChange={
+                    (e) => setRoomType(e.target.value)
+                } />
+              </Form.Group>
+              <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
+                <Form.Label>Check-In Date </Form.Label>
+                <Form.Control type="date" placeholder="Enter Check-in Date" value={checkInDate} onChange={
+                    (e) => setCheckInDate(e.target.value)
+                } />
+              </Form.Group>
+              <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
+                <Form.Label>Check-Out Date</Form.Label>
+                <Form.Control type="date" placeholder="Enter-out Date"  value={checkOutDate} onChange={
+                    (e) => setCheckOutDate(e.target.value)
+                
+                }/>
+              </Form.Group>
+              <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
+                <Form.Label>No. of Guest</Form.Label>
+                <Form.Control type="text" placeholder="Enter Guest Count" value={guestCount} onChange={
+                    (e) => setGuestCount(e.target.value)
+                } />
+              </Form.Group>
+            </Modal.Body>
+          </Modal>
+        </div>
         
       </div>
     </div>
