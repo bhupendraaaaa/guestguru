@@ -1,5 +1,3 @@
-
-
 from django.urls import path, include
 from .views import *
 
@@ -12,4 +10,5 @@ urlpatterns = [
     path('allusers/', AllUsersview.as_view()),
     path('admincheck/', AdminCheck.as_view()),
     path('usercheck/', UserCheck.as_view()),
+    path('useredit/<int:id>/', UserEditView.as_view()),
 ]

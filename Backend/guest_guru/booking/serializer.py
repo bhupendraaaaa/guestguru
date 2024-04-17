@@ -6,12 +6,12 @@ class BookingSerializer(serializers.ModelSerializer):
         model = Booking
         fields = "__all__"
 
-    def get_fields(self, request):
+    def get_fields(self):
         fields =  super().get_fields()
+        request = self.context.get('request')
     
         if request and request.method == 'GET':
             fields['room'] = RoomSerializer()
-            return super().get_fields()
         return fields
 
 class RoomSerializer(serializers.ModelSerializer):

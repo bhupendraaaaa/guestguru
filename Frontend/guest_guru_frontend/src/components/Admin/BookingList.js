@@ -13,65 +13,58 @@ function BookingList() {
     const [guestCount, setGuestCount] = useState([]);
     const [modelIsOpen, setModelIsOpen] = useState(false);
 
+    const getBookings = async () => {
+        let api = 'http://localhost:8000/book/booking';
+        const response = await fetch(api, {
+            method: 'GET',
+            credentials: 'include'
+        });
+        const data = await response.json();
+        console.log(data);
+        setBookingList(data);
+    }
+
     useEffect(() => {
-        const getBookingList = async () => {
-            const response = await fetch('http://localhost:8000/book/booking/');
-            const data = await response.json();
-            console.log(data);
-            
-            if (Array.isArray(data)) {
-                setBookingList(data);
-            } else {
-                console.log('Data is not an array', data);
-            }
-        }
-        getBookingList();
+        getBookings();
     }, []);
 
     const handleBooking = async (e) => {
         e.preventDefault();
         let formData = new FormData();
-        formData.append('room_type', roomType);
-        formData.append('check_in', checkInDate);
-        formData.append('check_out', checkOutDate);
-        formData.append('guest_count', guestCount);
+        formData.append("room_type", roomType);
+        formData.append("check_in", checkInDate);
+        formData.append("check_out", checkOutDate);
+        formData.append("guest_count", guestCount);
 
-    let addBooking = 'http://localhost:8000/book/booking/'
+        let addBooking = "http://localhost:8000/book/booking";
 
-    let addBookingResponse = await fetch(addBooking, {
-        method: 'POST',
-        body: formData,
-        credentials: 'include'
-    });
+        let addBookingResponse = await fetch(addBooking, {
+            method: "POST",
+            body: formData,
+            credentials: "include",
+        });
 
-    let parsedData = await addBookingResponse.json();
-    console.log(parsedData);
-    console.log(formData)
+        let parsedData = await addBookingResponse.json();
+        console.log(parsedData);
+        console.log(formData);
 
-    if (addBookingResponse.status === 201) {
-        alert('Booking Added Successfully');
+        if (addBookingResponse.status === 201) {
+            alert("Booking Added Successfully");
+            getBookings();
+
+        } else {
+            if (parsedData.room_type) {
+                alert("Room Type is required");
+            } else if (parsedData.check_in) {
+                alert("Check-In Date is required");
+            } else if (parsedData.check_out) {
+                alert("Check-Out Date is required");
+            } else if (parsedData.guest_count) {
+                alert("Guest Count is required");
+            }
+        }
     }
-
-    else {  
-        if (parsedData.room_type) {
-            alert('Room Type is required');
-        }
-
-        else if (parsedData.check_in) {
-            alert('Check-in Date is required');
-        }
-
-        else if (parsedData.check_out) {
-            alert('Check-out Date is required');
-        }
-
-        else if (parsedData.guest_count) {
-            alert('Guest Count is required');
-        }
-
-    }
-
-    }
+            
 
     const openModal = () => {
         setModelIsOpen(true);
@@ -206,6 +199,9 @@ function BookingList() {
                     (e) => setGuestCount(e.target.value)
                 } />
               </Form.Group>
+              <Button variant="primary" type="submit" onClick={handleBooking}>
+                Update Booking
+              </Button>
             </Modal.Body>
           </Modal>
         </div>

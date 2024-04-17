@@ -8,13 +8,14 @@ import Modal from "react-bootstrap/Modal";
 function App() {
   const [roomList, setRoomList] = useState([]);
   const [rooms, setRooms] = useState([]);
-  const [roomName, setRoomName] = useState([]);
+  const [roomName, setRoomName] = useState("");
   const [roomImage, setRoomImage] = useState("");
-  const [roomPrice, setRoomPrice] = useState([]);
-  const [roomCapacity, setRoomCapacity] = useState([]);
-  const [roomDescription, setRoomDescription] = useState([]);
-  const [roomNumber, setRoomNumber] = useState([]);
+  const [roomPrice, setRoomPrice] = useState("");
+  const [roomCapacity, setRoomCapacity] = useState("");
+  const [roomDescription, setRoomDescription] = useState("");
+  const [roomNumber, setRoomNumber] = useState("");
   const [modelIsOpen, setModelIsOpen] = useState(false);
+  const [roomId, setRoomId] = useState("");
 
   useEffect(() => {
     const getRooms = async () => {
@@ -38,7 +39,6 @@ function App() {
     formData.append("capacity", roomCapacity);
     formData.append("description", roomDescription);
     formData.append("room_no", roomNumber);
-    formData.append("image", roomImage);
 
     let addRoom = "http://localhost:8000/book/room/";
 
@@ -54,12 +54,6 @@ function App() {
 
     if (addRoomResponse.status === 201) {
       alert("Room Added Successfully");
-      // setRoomName('');
-      // setRoomImage('');
-      // setRoomPrice('');
-      // setRoomCapacity('');
-      // setRoomDescription('');
-      // return;
     } else {
       if (parsedData.room_type) {
         alert(parsedData.room_type);
@@ -86,38 +80,55 @@ function App() {
       });
   };
 
+  const handleEdit = async (e) => {
+    e.preventDefault();
 
-  const handleEdit = (roomId) => {
-    fetch(`http://127.0.0.1:8000/book/edit/${roomId}/`)
-      .then((response) => response.json())
-      .then((data) => {
-        setRoomName(data.room_type);
-        setRoomPrice(data.price);
-        setRoomCapacity(data.capacity);
-        setRoomDescription(data.description);
-        setRoomNumber(data.room_no);
-        setRoomImage(data.image);
-      });
+    const formData = new FormData();
+    formData.append("room_type", roomName);
+    formData.append("price", roomPrice);
+    formData.append("capacity", roomCapacity);
+    formData.append("description", roomDescription);
+    formData.append("room_no", roomNumber);
+
+    let response = await fetch(
+      `http://localhost:8000/book/edit/${roomId}/`,
+      {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      }
+    );
+    let parsedData = await response.json();
+    console.log(parsedData);
+
+    if (response.status === 200) {
+      alert("Room Updated Successfully");
+      fetchRoomList();
+      window.location.reload();
+    } 
+
+
   };
 
-  const handleDelete = (roomId) => {
-    fetch(`http://localhost:8000/book/room/${roomId}/`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        // Optionally, refresh the room list after a successful delete
-        fetchRoomList();
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+  const handleDelete = async (id) => {
+    let response = await fetch(`http://localhost:8000/book/delete/${id}/`, {
+      method: "POST",
+      credentials: "include",
+    });
+    let parsedData = await response.json();
+    console.log(parsedData);
+
+    if (response.status === 200) {
+      alert("Room Deleted Successfully");
+      fetchRoomList();
+      window.location.reload();
+    } 
   };
+
 
   const openModal = (room) => {
     setModelIsOpen(true);
+    setRoomId(room.id);
     setRoomName(room.room_type);
     setRoomPrice(room.price);
     setRoomCapacity(room.capacity);
@@ -130,179 +141,37 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <div className="sidebar">
-        <h3 className="sidebar-heading">Admin Panel</h3>
-        <ul className="sidebar-menu">
-          <li>
-            <a href="/dashboard">Dashboard</a>
-          </li>
-          <li>
-            <a href="room-dash" className="active">
-              Rooms
-            </a>
-          </li>
-          <li>
-            <a href="#">Event List</a>
-          </li>
-          <li>
-            <a href="/user">User List</a>
-          </li>
-          <li>
-            <a href="/booking">Bookings</a>
-          </li>
-        </ul>
-      </div>
+    <div>
+      <div className="App">
+        <div className="sidebar">
+          <h3 className="sidebar-heading">Admin Panel</h3>
+          <ul className="sidebar-menu">
+            <li>
+              <a href="/dashboard">Dashboard</a>
+            </li>
+            <li>
+              <a href="room-dash" className="active">
+                Rooms
+              </a>
+            </li>
+            <li>
+              <a href="#">Event List</a>
+            </li>
+            <li>
+              <a href="/user">User List</a>
+            </li>
+            <li>
+              <a href="/booking">Bookings</a>
+            </li>
+          </ul>
+        </div>
 
-      <div className="content">
-        <h2 className="mb-3 text-start">Add Room</h2>
+        <div className="content">
+          <h2 className="mb-3 text-start">Add Room</h2>
 
-        <Form>
-          <div className="row">
-            <div className="col">
-              <Form.Group
-                className="mb-3 text-start"
-                controlId="formBasicEmail"
-              >
-                <Form.Label>Room Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter room name"
-                  value={roomName}
-                  onChange={(e) => setRoomName(e.target.value)}
-                />
-              </Form.Group>
-            </div>
-            <div className="mb-3">
-              <label for="formFile" className="form-label">
-                Room Image
-              </label>
-              <input
-                className="form-control"
-                type="file"
-                id="formFile"
-                onChange={(e) => {
-                  let file = e.target.files[0];
-                  setRoomImage(file);
-                }}
-              />
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col">
-              <Form.Group
-                className="mb-3 text-start"
-                controlId="formBasicEmail"
-              >
-                <Form.Label>Room Price</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter room price"
-                  value={roomPrice}
-                  onChange={(e) => setRoomPrice(e.target.value)}
-                />
-              </Form.Group>
-            </div>
-            <div className="col">
-              <Form.Group
-                className="mb-3 text-start"
-                controlId="formBasicEmail"
-              >
-                <Form.Label>Room Capacity</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter room capacity"
-                  value={roomCapacity}
-                  onChange={(e) => setRoomCapacity(e.target.value)}
-                />
-              </Form.Group>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col">
-              <Form.Group
-                className="mb-3 text-start"
-                controlId="formBasicEmail"
-              >
-                <Form.Label>Room No.</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Enter room number"
-                  value={roomNumber}
-                  onChange={(e) => setRoomNumber(e.target.value)}
-                />
-              </Form.Group>
-            </div>
-            <div className="col">
-              <Form.Group
-                className="mb-3 text-start"
-                controlId="formBasicEmail"
-              >
-                <Form.Label>Room Description</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  placeholder="Enter room description"
-                  value={roomDescription}
-                  onChange={(e) => setRoomDescription(e.target.value)}
-                />
-              </Form.Group>
-            </div>
-          </div>
-
-          <Button variant="primary" type="submit" onClick={handleRoom}>
-            Submit
-          </Button>
-        </Form>
-
-        <h2 className="mt-5 mb-3 text-start">Room Details</h2>
-
-        <Table responsive>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Room No.</th>
-              <th>Room Name</th>
-              <th>Room Image</th>
-              <th>Room Price</th>
-              <th>Room Capacity</th>
-              <th>Room Description</th>
-              
-              <th colSpan={2}>Action</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {rooms.map((room) => (
-              <tr key={room.id}>
-                <td>{room.id}</td>
-                <td>{room.room_no}</td>
-                <td>{room.room_type}</td>
-                <td>
-                  <img src={room.image} alt="Room 1" width={"200px"} />
-                </td>
-                <td>{room.price}</td>
-                <td>{room.capacity}</td>
-                <td>{room.description}</td>
-                <td><Button variant="primary" onClick={() => openModal(room)} >Edit</Button></td>
-                <td><Button variant="danger" onClick={handleDelete}>Delete</Button></td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-
-        <div className="modal">
-          {/* <button variant="Primary" onClick={openModal}>
-            Edit
-          </button> */}
-          <Modal show={modelIsOpen} onHide={closeModal}>
-            <Modal.Header closeButton>
-              <Modal.Title>Edit Room</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Form>
+          <Form>
+            <div className="row">
+              <div className="col">
                 <Form.Group
                   className="mb-3 text-start"
                   controlId="formBasicEmail"
@@ -315,6 +184,25 @@ function App() {
                     onChange={(e) => setRoomName(e.target.value)}
                   />
                 </Form.Group>
+              </div>
+              <div className="mb-3">
+                <label for="formFile" className="form-label">
+                  Room Image
+                </label>
+                <input
+                  className="form-control"
+                  type="file"
+                  id="formFile"
+                  onChange={(e) => {
+                    let file = e.target.files[0];
+                    setRoomImage(file);
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col">
                 <Form.Group
                   className="mb-3 text-start"
                   controlId="formBasicEmail"
@@ -327,6 +215,8 @@ function App() {
                     onChange={(e) => setRoomPrice(e.target.value)}
                   />
                 </Form.Group>
+              </div>
+              <div className="col">
                 <Form.Group
                   className="mb-3 text-start"
                   controlId="formBasicEmail"
@@ -339,6 +229,11 @@ function App() {
                     onChange={(e) => setRoomCapacity(e.target.value)}
                   />
                 </Form.Group>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col">
                 <Form.Group
                   className="mb-3 text-start"
                   controlId="formBasicEmail"
@@ -351,6 +246,8 @@ function App() {
                     onChange={(e) => setRoomNumber(e.target.value)}
                   />
                 </Form.Group>
+              </div>
+              <div className="col">
                 <Form.Group
                   className="mb-3 text-start"
                   controlId="formBasicEmail"
@@ -364,19 +261,140 @@ function App() {
                     onChange={(e) => setRoomDescription(e.target.value)}
                   />
                 </Form.Group>
-                <Button variant="primary"  onClick={handleEdit(roomId)}>
-                  Submit
-                </Button>
-              </Form>
-            </Modal.Body>
-          </Modal>
+              </div>
+            </div>
+
+            <Button variant="primary" type="submit" onClick={handleRoom}>
+              Submit
+            </Button>
+          </Form>
+
+          <h2 className="mt-5 mb-3 text-start">Room Details</h2>
+
+          <Table responsive>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Room No.</th>
+                <th>Room Name</th>
+                <th>Room Image</th>
+                <th>Room Price</th>
+                <th>Room Capacity</th>
+                <th>Room Description</th>
+
+                <th colSpan={2}>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {rooms.map((room) => (
+                <tr key={room.id}>
+                  <td>{room.id}</td>
+                  <td>{room.room_no}</td>
+                  <td>{room.room_type}</td>
+                  <td>
+                    <img src={room.image} alt="Room 1" width={"200px"} />
+                  </td>
+                  <td>{room.price}</td>
+                  <td>{room.capacity}</td>
+                  <td>{room.description}</td>
+                  <td>
+                    <Button
+                      variant="primary"
+                      onClick={() => openModal(room)}
+                    >
+                      Edit
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      variant="danger"
+                      onClick={() => handleDelete(room.id)}
+                    >
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+
+          <div className="modal">
+            <Modal show={modelIsOpen} onHide={closeModal}>
+              <Modal.Header closeButton>
+                <Modal.Title>Edit Room</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form>
+                  <Form.Group
+                    className="mb-3 text-start"
+                    controlId="formBasicEmail"
+                  >
+                    <Form.Label>Room Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter room name"
+                      value={roomName}
+                      onChange={(e) => setRoomName(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group
+                    className="mb-3 text-start"
+                    controlId="formBasicEmail"
+                  >
+                    <Form.Label>Room Price</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter room price"
+                      value={roomPrice}
+                      onChange={(e) => setRoomPrice(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group
+                    className="mb-3 text-start"
+                    controlId="formBasicEmail"
+                  >
+                    <Form.Label>Room Capacity</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter room capacity"
+                      value={roomCapacity}
+                      onChange={(e) => setRoomCapacity(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group
+                    className="mb-3 text-start"
+                    controlId="formBasicEmail"
+                  >
+                    <Form.Label>Room No.</Form.Label>
+                    <Form.Control
+                      type="number"
+                      placeholder="Enter room number"
+                      value={roomNumber}
+                      onChange={(e) => setRoomNumber(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group
+                    className="mb-3 text-start"
+                    controlId="formBasicEmail"
+                  >
+                    <Form.Label>Room Description</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      rows={3}
+                      placeholder="Enter room description"
+                      value={roomDescription}
+                      onChange={(e) => setRoomDescription(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Button variant="primary" onClick={handleEdit}>
+                    Update Room
+                  </Button>
+                </Form>
+              </Modal.Body>
+            </Modal>
+          </div>
         </div>
-
-        {/* <Modal>
-          isOpen={modelIsOpen}
-          onRequestClose={closeModal}
-
-        </Modal> */}
       </div>
     </div>
   );
