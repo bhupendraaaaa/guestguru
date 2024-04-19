@@ -115,3 +115,13 @@ class UserEditView(APIView):
                 return Response({'msg': 'Updated'}, status=status.HTTP_200_OK)
         return Response({'msg': 'Login First'}, status=status.HTTP_401_UNAUTHORIZED)
 
+class UserDeleteView(APIView):
+    
+    def post(self, request, *args, **kwargs):
+        token = request.COOKIES.get('token')
+        verification, payload = verify_access_token(token)
+        if verification:
+            user = User.objects.get(id=kwargs['id'])
+            user.delete()
+            return Response({'msg': 'Deleted'}, status=status.HTTP_200_OK)
+        return Response({'msg': 'Login First'}, status=status.HTTP_401_UNAUTHORIZED)

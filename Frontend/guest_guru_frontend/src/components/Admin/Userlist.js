@@ -16,23 +16,23 @@ function Userlist() {
   const [role, setRole] = useState("");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [userId, setUserId] = useState("");
-  
+
   const getUsers = async () => {
-    let api = 'http://localhost:8000/allusers/';
+    let api = "http://localhost:8000/allusers/";
     const response = await fetch(api, {
-      method: 'GET',
-      credentials: 'include'
-  });
+      method: "GET",
+      credentials: "include",
+    });
     const data = await response.json();
     console.log(data);
 
     setUsers(data);
-  }
+  };
 
   useEffect(() => {
     getUsers();
     // Invoke the function
-  }, []); 
+  }, []);
 
   const handleUser = async (e) => {
     e.preventDefault();
@@ -44,7 +44,6 @@ function Userlist() {
     formData.append("address", address);
     formData.append("password", password);
     formData.append("role", role);
-
 
     let addUser = "http://localhost:8000/registration/";
 
@@ -78,27 +77,27 @@ function Userlist() {
         alert("Role is required");
       }
     }
-  }
+  };
 
   const openModal = (User) => {
     setModalIsOpen(true);
+
     setFirstName(User.firstname);
     setLastName(User.lastname);
     setEmail(User.email);
     setPhone(User.phone);
     setAddress(User.address);
-    setPassword(User.password); 
+    setPassword(User.password);
     setRole(User.role);
     setUserId(User.id);
-    console.log("user",userId)
-  }
+    console.log("user", userId);
+  };
 
   const closeModal = () => {
     setModalIsOpen(false);
-  }
+  };
 
   const handleUserEdit = async () => {
-
     const formData = new FormData();
     formData.append("firstname", firstName);
     formData.append("lastname", lastName);
@@ -108,14 +107,11 @@ function Userlist() {
     // formData.append("password", password);
     formData.append("role", role);
 
-    let response = await fetch(
-      `http://localhost:8000/useredit/${userId}/`,
-      {
-        method: "POST",
-        credentials: "include",
-        body: formData,
-      }
-    );
+    let response = await fetch(`http://localhost:8000/useredit/${userId}/`, {
+      method: "POST",
+      credentials: "include",
+      body: formData,
+    });
     let parsedData = await response.json();
     console.log(parsedData);
 
@@ -124,18 +120,30 @@ function Userlist() {
       getUsers();
       closeModal();
       setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPhone("");
-    setAddress("");
-    setPassword(""); 
-    setRole("");
-    setUserId("");
+      setLastName("");
+      setEmail("");
+      setPhone("");
+      setAddress("");
+      setPassword("");
+      setRole("");
+      setUserId("");
     }
-  }
+  };
 
+  const handleUserDelete = async (id) => {
+    let response = await fetch(`http://localhost:8000/delete/${id}`, {
+      method: "POST",
+      credentials: "include",
+    });
+    let parsedData = await response.json();
+    console.log(parsedData);
 
-
+    if (response.status === 200) {
+      alert("User Deleted Successfully");
+      getUsers();
+      window.location.reload();
+    } 
+  };
   return (
     <div>
       <div className="App">
@@ -290,10 +298,15 @@ function Userlist() {
                   <td>{User.address}</td>
                   <td>{User.password}</td>
                   <td>
-                    <Button variant="primary" onClick={() => openModal(User)}>Edit</Button>
+                    <Button variant="primary" onClick={() => openModal(User)}>
+                      Edit
+                    </Button>
                   </td>
                   <td>
-                    <Button variant="danger">Delete</Button>
+                    <Button 
+                    variant="danger"
+                    onClick={() => handleUserDelete(User.id)}
+                    >Delete</Button>
                   </td>
                 </tr>
               ))}
@@ -373,26 +386,21 @@ function Userlist() {
                       value={role}
                       onChange={(e) => setRole(e.target.value)}
                     >
-                      <
-                      option value="">Select Role</option>
+                      <option value="">Select Role</option>
                       <option value="admin">Admin</option>
                       <option value="guest">Guest</option>
                     </Form.Control>
                   </Form.Group>
-                  <Button variant="primary"  onClick={handleUserEdit}> 
+                  <Button variant="primary" onClick={handleUserEdit}>
                     Update User
                   </Button>
                 </Form>
               </Modal.Body>
             </Modal>
-              
           </div>
         </div>
       </div>
-
     </div>
   );
 }
 export default Userlist;
-
-

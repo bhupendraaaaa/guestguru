@@ -11,4 +11,5 @@ urlpatterns = [
     path('admincheck/', AdminCheck.as_view()),
     path('usercheck/', UserCheck.as_view()),
     path('useredit/<int:id>/', UserEditView.as_view()),
+    path('delete/<int:id>', UserDeleteView.as_view()),
 ]

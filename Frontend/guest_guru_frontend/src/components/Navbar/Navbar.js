@@ -83,7 +83,10 @@ function Navbar() {
             <Link to="/facilities">Facilities</Link>
           </li>
           <li>
-            <Link to="/event">Event</Link>
+            <Link to="/translator">Language Translator</Link>
+          </li>
+          <li>
+            <Link to="/currency">Currency Converter</Link>
           </li>
           <li>
             <Link to="/contact_us">Contact us</Link>
