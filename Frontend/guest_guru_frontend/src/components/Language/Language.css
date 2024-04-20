@@ -1,0 +1,81 @@
+/* Language Translation */
+.translator-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 0;
+}
+
+.translator-headline{
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+    padding-top: 30px;
+    text-decoration: underline;
+}
+
+.language-translate {
+    max-width: 800px;
+    width: 90%;
+    border-radius: 7px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.03);
+    margin: auto;
+  }
+  
+  .language-translate .language-wrapper {
+    border-radius: 5px;
+    border: 3px solid black;
+  }
+  
+  .language-translate .language-wrapper .language-top {
+    display: flex;
+    border-bottom: 3px solid black;
+  }
+  
+  .language-translate .language-wrapper .language-top textarea {
+    height: 250px;
+    width: 100%;
+    /* border: none;
+    outline: none;
+    resize: none;
+    background: none; */
+    font-size: 22px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: #f5f4f0;
+    font-style: italic;
+    
+  }
+  
+  .language-translate .language-wrapper .language-top .lang-line {
+    border: 2px solid black;
+    /* opacity: 0.3; */
+  }
+  
+  .language-translate .language-wrapper .language-top textarea::placeholder {
+    color: #b7b6b6;
+  }
+  
+  .language-translate .language-wrapper .language-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 15px;
+  }
+  
+  .language-translate .language-wrapper .language-bottom select {
+    width: 25%;
+    padding: 10px;
+    border: 3px solid black;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  .language-translate .language-wrapper .language-bottom i {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 15px;
+  }
+  

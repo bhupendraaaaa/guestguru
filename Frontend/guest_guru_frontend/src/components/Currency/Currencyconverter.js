@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./Currency.css";
 
 
 function Currencyconverter() {
@@ -65,9 +66,9 @@ function Currencyconverter() {
   return (
     <>
 
-      <div className="common-container">
-        <div className="common-header">
-          <div className="common-headline">
+      <div className="currency-container">
+        <div className="currency-header">
+          <div className="currency-headline">
             <h1>Currency Exchange!</h1>
           </div>
 

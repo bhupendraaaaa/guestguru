@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./Language.css";
 
 
 const countries = {
@@ -164,9 +165,9 @@ const LanguageTranslator = () => {
     <>
 
 
-      <div className="common-container">
-        <div className="common-header">
-          <div className="common-headline">
+      <div className="translator-container">
+        <div className="translator-header">
+          <div className="translator-headline">
             <h1>Communicate Easily!</h1>
           </div>
         </div>
