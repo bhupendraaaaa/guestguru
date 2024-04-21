@@ -11,6 +11,7 @@ class Room(models.Model):
     price = models.FloatField()
     description = models.TextField(null=True, blank=True) 
     image = models.ImageField( null=True) 
+    rating = models.FloatField(default=0)
 
 
 class Booking(models.Model):

@@ -5,6 +5,7 @@ import roomFirst from "../Assets/room1.jpg";
 import roomSecond from "../Assets/room2.jpg";
 import roomThird from "../Assets/room3.jpg";
 import { Navigate, useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 function Home() {
   const navigate = useNavigate();
@@ -66,25 +67,39 @@ function Home() {
       credentials: "include",
     });
 
-    let parsedData = await bookingResponse.json();
+    var parsedData = await bookingResponse.json();
 
     if (bookingResponse.status === 201) {
-      alert("Booking Successful");
+
+      swal({
+        title: "Booking Successful!",
+        text: "Your booking has been confirmed",
+        icon: "success",
+        button: "OK",
+      });
       setBookings([bookings, parsedData]);
       return;
     } else if (bookingResponse.status === 406) {
-      alert("Room is already booked");
+      swal({
+        title: "Booking Unsuccessful!",
+        text: "Room is already Booked !",
+        icon: "error",
+        button: "OK",
+      });
+      
     } else {
-      console.log(parsedData);
-      if (parsedData.check_in) {
-        alert(parsedData.check_in);
-      } else if (parsedData.check_out) {
-        alert(parsedData.check_out);
-      } else if (parsedData.guest_count) {
-        alert(parsedData.guest_count);
-      }
+      swal({
+        title: "Booking Unsuccessful!",
+        text: `${parsedData.msg}`,
+        icon: "error",
+        button: "OK",
+      });
     }
   };
+
+  const handleReadMoreClick = () => {
+    navigate("/about");
+  }
 
   return (
     <>
@@ -94,7 +109,7 @@ function Home() {
             <h1>A Memorable Experience</h1>
             <p>"Unleashing Hospitality with Heart and Technology!"</p>
 
-            <form action="handleBooking()">
+            <form onSubmit={handleBooking}>
               <div className="booking">
                 <div className="booking-item">
                   <label htmlFor="check-in">Check-in</label>
@@ -173,7 +188,7 @@ function Home() {
               />
             </div>
           </div>
-          <button>Read More</button>
+          <button onClick={handleReadMoreClick}>Read More</button>
         </div>
 
         <section className="events" id="events">

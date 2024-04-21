@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import "./Dashboard.css";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import Sidebar from "./Sidebar";
 
 function Userlist() {
   const [users, setUsers] = useState([]);
@@ -147,28 +148,7 @@ function Userlist() {
   return (
     <div>
       <div className="App">
-        <div className="sidebar">
-          <h3 className="sidebar-heading">Admin Panel</h3>
-          <ul className="sidebar-menu">
-            <li>
-              <a href="/dashboard">Dashboard</a>
-            </li>
-            <li>
-              <a href="/room-dash" className="active">
-                Rooms
-              </a>
-            </li>
-            <li>
-              <a href="#">Event List</a>
-            </li>
-            <li>
-              <a href="/user">User List</a>
-            </li>
-            <li>
-              <a href="/booking">Bookings</a>
-            </li>
-          </ul>
-        </div>
+        <Sidebar />
 
         <div className="content">
           <h2 className="mb-3 text-start">Add User</h2>

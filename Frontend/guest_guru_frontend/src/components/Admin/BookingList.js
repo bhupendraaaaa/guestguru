@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Sidebar from "./Sidebar";
 
 function BookingList() {
     const [bookingList, setBookingList] = useState([]);
@@ -12,6 +13,8 @@ function BookingList() {
     const [checkOutDate, setCheckOutDate] = useState([]);
     const [guestCount, setGuestCount] = useState([]);
     const [modelIsOpen, setModelIsOpen] = useState(false);
+    const [room, setRoom] = useState([]);
+    const [bookingId, setBookingId] = useState("");
 
     const getBookings = async () => {
         let api = 'http://localhost:8000/book/booking';
@@ -64,14 +67,58 @@ function BookingList() {
             }
         }
     }
+
+    const handleDelete = async (id) => {
+      let response = await fetch(`http://localhost:8000/book/bookingdelete/${id}/`, {
+          method: 'POST',
+          credentials: 'include',
+    });
+    let parsedData = await response.json();
+    console.log(parsedData);
+    if (response.status === 200) {
+        alert("Booking Deleted Successfully");
+        window.location.reload();
+    } 
+    };
+
+    const handleBookingEdit = async (e) => {
+      const formData = new FormData();
+      formData.append("room", room.id);
+      formData.append("room_type", roomType);
+      
+      formData.append("check_in", checkInDate);
+      formData.append("check_out", checkOutDate);
+      formData.append("guest_count", guestCount);
+
+      let response = await fetch(`http://localhost:8000/book/bookingedit/${bookingId}/`, {
+          method: 'POST',
+          body: formData,
+          credentials: 'include',
+      });
+
+      let parsedData = await response.json();
+      console.log(parsedData);
+      if (response.status === 200) {
+          alert("Booking Updated Successfully");
+          getBookings();
+          closeModal();
+          setCheckInDate("");
+          setCheckOutDate("");
+          setGuestCount("");
+      }
+    };
+        
+
+
             
 
-    const openModal = () => {
+    const openModal = (booking) => {
         setModelIsOpen(true);
-        // setRoomType(booking.room.room_type);
-        // setCheckInDate(booking.check_in);
-        // setCheckOutDate(booking.check_out);
-        // setGuestCount(booking.guest_count);
+        setBookingId(booking.id);
+        setRoomType(booking.room.room_type);
+        setCheckInDate(booking.check_in);
+        setCheckOutDate(booking.check_out);
+        setGuestCount(booking.guest_count);
 
     }
 
@@ -81,18 +128,7 @@ function BookingList() {
 
   return (
     <div className='App'>
-      <div className="sidebar">
-        <h3 className="sidebar-heading">
-          Admin Panel
-        </h3>
-        <ul className="sidebar-menu">
-          <li><a href='/dashboard'>Dashboard</a></li>
-          <li><a href='/room-dash'>Rooms</a></li>
-          <li><a href='/booking'>Bookings</a></li>
-          <li><a href=''>User List</a></li>
-        </ul>
-      </div>
-
+      <Sidebar />
       <div className='content'>
         <h2 className="mb-3 text-start">Booking List</h2>
 
@@ -162,8 +198,8 @@ function BookingList() {
                         <td>{booking.check_in}</td>
                         <td>{booking.check_out}</td>
                         <td>{booking.guest_count}</td>
-                        <td><Button variant="primary" onClick={() => openModal()}>Edit</Button></td>
-                        <td><Button variant="danger">Delete</Button></td>
+                        <td><Button variant="primary" onClick={() => openModal(booking)}>Edit</Button></td>
+                        <td><Button variant="danger" onClick={() => handleDelete(booking.id)}>Delete</Button></td>
                     </tr>
                 ))}
             </tbody>
@@ -199,7 +235,7 @@ function BookingList() {
                     (e) => setGuestCount(e.target.value)
                 } />
               </Form.Group>
-              <Button variant="primary" type="submit" onClick={handleBooking}>
+              <Button variant="primary" type="submit" onClick={handleBookingEdit}>
                 Update Booking
               </Button>
             </Modal.Body>

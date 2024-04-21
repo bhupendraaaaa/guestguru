@@ -28,8 +28,13 @@
     color: #fff;
     padding: 10px;
     text-decoration: none;
+
   }
   
+  .sidebar-menu li:last-child {
+    margin-top: 20px;
+    cursor: pointer;
+  }
   .sidebar-menu a:hover {
     background-color: #555;
   }
@@ -49,4 +54,6 @@
     flex-direction: column;
     width: 100%;
   }
+
+
 

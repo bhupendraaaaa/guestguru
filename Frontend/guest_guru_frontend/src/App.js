@@ -17,6 +17,8 @@ import Facilities from "./components/Facilities/Facilities";
 import BookingList from "./components/Admin/BookingList";
 import Currencyconverter from "./components/Currency/Currencyconverter";
 import LanguageTranslator from "./components/Language/LanguageTranslator";
+import About from "./components/Pages/About";
+import FacilitiesDash from "./components/Admin/Facilities-Dash";
 
 function App() {
   var Tawk_API = Tawk_API || {},
@@ -61,6 +63,8 @@ function App() {
           <Route path="/booking" element={<BookingList />} />
           <Route path="/currency" element={<Currencyconverter />} />
           <Route path="/translator" element={<LanguageTranslator />} />
+          <Route path="/about" element={<About/>} />
+          <Route path="/facilitites-dash" element={<FacilitiesDash />} />
         </Routes>
         <Footer />
       </Router>

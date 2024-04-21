@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Currency.css";
 
-
 function Currencyconverter() {
   const [sourceCurrency, setSourceCurrency] = useState("USD");
   const [finalCurrency, setfinalCurrency] = useState("NPR");
@@ -14,7 +13,7 @@ function Currencyconverter() {
   }, []);
 
   useEffect(() => {
-  //Change API KEY
+    //Change API KEY
     fetch(
       "https://v6.exchangerate-api.com/v6/dae00175499cfddc7330dcec/latest/USD"
     )
@@ -65,7 +64,14 @@ function Currencyconverter() {
 
   return (
     <>
-
+      <marquee
+        behavior="scroll"
+        direction="left"
+        loop="infinite"
+        style={{ color: "red", fontSize: "20px", fontWeight: "bold" }}
+      >
+        {conversionRates && JSON.stringify(conversionRates)}
+      </marquee>
       <div className="currency-container">
         <div className="currency-header">
           <div className="currency-headline">
@@ -126,7 +132,6 @@ function Currencyconverter() {
           </div>
         </div>
       </div>
-
     </>
   );
 }

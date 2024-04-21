@@ -1,32 +1,42 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import './Facilities.css';
-import image2 from '../Assets/Facilities/2.png';
-// import image2 from '../../images/2.jpg';
-// import image3 from '../../images/3.jpg';
-// import image4 from '../../images/4.jpg';
-
-
 function Facilities() {
-  return (
-    <>
-      <div className="hero-ser">
-        <div className="ser-title">
-          <h1>Our Facilities</h1>
-        </div>
-      </div>
-      <section>
-        <div className="ser-container">
-          <div className="ser" key=''>
-            <img src={image2} alt="Room 1" />
-            <div className="ser-name">
-              <h3>Facilitie Name</h3>
+    const [facilities, setfacilities] = useState([]);
+
+    useEffect(() => {
+        const getfacilities = async () => {
+            const response = await fetch('http://localhost:8000/facility/view/');
+            const data = await response.json();
+            setfacilities(data);
+            console.log(data);
+        }
+        getfacilities();
+
+    }, []);
+    return (
+        <div>
+            <div className="hero-room">
+                <div className="room-title">
+                    <h1>Facilities</h1>
+                </div>
+                <section>
+                    <div className="room-container">
+                        {facilities.map((Facility) => (
+                            <div className="room" key={Facility.id}>
+                                <img src={Facility.image} alt="Room 1" />
+                                <div className="room-name">
+                                    <h3>{Facility.name}</h3>
+                                </div>
+                                <p>{Facility.description} </p>
+                                <p>&#8377;{Facility.price}</p>
+                               
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
             </div>
-            <p>Description</p>
-          </div>
         </div>
-          
-      </section>
-    </>
-  )
+    )
 }
-export default Facilities;
+export default Facilities

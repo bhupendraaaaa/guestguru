@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
+import Sidebar from "./Sidebar";
 
 function App() {
   const [roomList, setRoomList] = useState([]);
@@ -143,28 +144,7 @@ function App() {
   return (
     <div>
       <div className="App">
-        <div className="sidebar">
-          <h3 className="sidebar-heading">Admin Panel</h3>
-          <ul className="sidebar-menu">
-            <li>
-              <a href="/dashboard">Dashboard</a>
-            </li>
-            <li>
-              <a href="room-dash" className="active">
-                Rooms
-              </a>
-            </li>
-            <li>
-              <a href="#">Event List</a>
-            </li>
-            <li>
-              <a href="/user">User List</a>
-            </li>
-            <li>
-              <a href="/booking">Bookings</a>
-            </li>
-          </ul>
-        </div>
+       <Sidebar />
 
         <div className="content">
           <h2 className="mb-3 text-start">Add Room</h2>

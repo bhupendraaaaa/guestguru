@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'registration',
     'booking',
+    'facilities',
     'rest_framework',
     "corsheaders",
     'rest_framework_simplejwt',

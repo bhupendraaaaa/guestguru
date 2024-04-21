@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from .models import Booking, Room
-from .serializer import BookingSerializer, RoomSerializer, RoomEditSerializer
+from .serializer import BookingSerializer, RoomSerializer, RoomEditSerializer, BookingEditSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from datetime import datetime, timedelta
 from django.utils import timezone
@@ -132,21 +132,21 @@ class AvailableRoomsView(APIView):
         serializer = RoomSerializer(available_rooms, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-class BookingEditView(APIView):
+# class BookingEditView(APIView):
 
-    def post(self, request):
-        token = request.COOKIES.get('token')
-        verification, payload = verify_access_token(token)
-        if verification:
-            booking = Booking.objects.get(id=request.data.get('id'))
-            if booking.user_id == payload['user_id']:
-                booking.check_in = request.data.get('check_in')
-                booking.check_out = request.data.get('check_out')
-                booking.guest_count = request.data.get('guest_count')
-                booking.save()
-                return Response({'msg': 'Updated'}, status=status.HTTP_200_OK)
-            return Response({'msg': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
-        return Response({'msg': 'Login First'}, status=status.HTTP_401_UNAUTHORIZED)
+#     def post(self, request):
+#         token = request.COOKIES.get('token')
+#         verification, payload = verify_access_token(token)
+#         if verification:
+#             booking = Booking.objects.get(id=request.data.get('id'))
+#             if booking.user_id == payload['user_id']:
+#                 booking.check_in = request.data.get('check_in')
+#                 booking.check_out = request.data.get('check_out')
+#                 booking.guest_count = request.data.get('guest_count')
+#                 booking.save()
+#                 return Response({'msg': 'Updated'}, status=status.HTTP_200_OK)
+#             return Response({'msg': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
+#         return Response({'msg': 'Login First'}, status=status.HTTP_401_UNAUTHORIZED)
     
 class RoomEditView(APIView):
 
@@ -197,3 +197,33 @@ class RoomDetailViewID(APIView):
         room = Room.objects.get(id=kwargs['id'])
         serializer = RoomSerializer(room)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+class BookingEditView(APIView):
+    def post (self, request, *args, **kwargs):
+        token = request.COOKIES.get('token')
+        verification, payload = verify_access_token(token)
+        if verification:
+           serializer = BookingEditSerializer(data=request.data)
+           if serializer.is_valid(raise_exception=True):
+               booking = Booking.objects.get(id=kwargs['id'])
+            #    booking.room = request.data.get('room')
+               booking.check_in = request.data.get('check_in')
+               booking.check_out = request.data.get('check_out')
+               booking.guest_count = request.data.get('guest_count')
+               booking.save()
+               return Response({'msg': 'Updated'}, status=status.HTTP_200_OK)
+        return Response({'msg': 'Login First'}, status=status.HTTP_401_UNAUTHORIZED)
+    
+
+class BookingDeleteView(APIView):
+    def post(self, request, *args, **kwargs):
+        token = request.COOKIES.get('token')
+        verification, payload = verify_access_token(token)
+        if verification:
+            booking = Booking.objects.get(id=kwargs['id'])
+            booking.delete()
+            return Response({'msg': 'Deleted'}, status=status.HTTP_200_OK)
+        return Response({'msg': 'Login First'}, status=status.HTTP_401_UNAUTHORIZED)
+            
+              
