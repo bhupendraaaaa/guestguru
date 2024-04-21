@@ -5,6 +5,7 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Sidebar from "./Sidebar";
+import swal from 'sweetalert';
 
 function BookingList() {
     const [bookingList, setBookingList] = useState([]);
@@ -39,7 +40,7 @@ function BookingList() {
         formData.append("check_out", checkOutDate);
         formData.append("guest_count", guestCount);
 
-        let addBooking = "http://localhost:8000/book/booking";
+        let addBooking = "http://localhost:8000/book/booking/";
 
         let addBookingResponse = await fetch(addBooking, {
             method: "POST",
@@ -52,8 +53,17 @@ function BookingList() {
         console.log(formData);
 
         if (addBookingResponse.status === 201) {
-            alert("Booking Added Successfully");
+            swal({
+                title: "Booking Added Successfully",
+                icon: "success",
+                button: "OK",
+            });
+            setCheckInDate("");
+            setCheckOutDate("");
+            setGuestCount("");
             getBookings();
+
+
 
         } else {
             if (parsedData.room_type) {
@@ -175,7 +185,7 @@ function BookingList() {
           </div>
 
             <Button variant="primary" type="submit" onClick={handleBooking}>
-                Submit
+                Add Booking
             </Button>
         </form>
         <h2 className='mt-5 mb-3 text-start'>Booking Details</h2>

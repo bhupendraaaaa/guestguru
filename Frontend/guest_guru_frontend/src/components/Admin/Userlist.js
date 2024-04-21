@@ -5,6 +5,7 @@ import "./Dashboard.css";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Sidebar from "./Sidebar";
+import swal from "sweetalert";
 
 function Userlist() {
   const [users, setUsers] = useState([]);
@@ -59,8 +60,21 @@ function Userlist() {
     console.log(formData);
 
     if (addUserResponse.status === 201) {
-      alert("User Added Successfully");
+      swal({
+        title: "User Added Successfully",
+        icon: "success",
+        button: "OK"
+      });
+      setAddress("");
+      setEmail("");
+      setFirstName("");
+      setLastName("");
+      setPassword("");
+      setPhone("");
+      setRole("");
       getUsers();
+
+      
     } else {
       if (parsedData.firstname) {
         alert("First Name is required");
@@ -117,7 +131,11 @@ function Userlist() {
     console.log(parsedData);
 
     if (response.status === 200) {
-      alert("User Updated Successfully");
+      swal({
+        title: "User Updated Successfully",
+        icon: "success",
+        button: "OK"
+      });
       getUsers();
       closeModal();
       setFirstName("");
@@ -140,9 +158,13 @@ function Userlist() {
     console.log(parsedData);
 
     if (response.status === 200) {
-      alert("User Deleted Successfully");
+      swal({  
+        title: "User Deleted Successfully",
+        icon: "success",
+        button: "OK"
+      });
       getUsers();
-      window.location.reload();
+      
     } 
   };
   return (
@@ -264,7 +286,7 @@ function Userlist() {
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Address</th>
-                <th>Password</th>
+                <th>Action</th>
               </tr>
             </thead>
 

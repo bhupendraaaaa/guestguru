@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import Sidebar from "./Sidebar";
+import swal from "sweetalert";
 
 function App() {
   const [roomList, setRoomList] = useState([]);
@@ -54,7 +55,19 @@ function App() {
     console.log(formData);
 
     if (addRoomResponse.status === 201) {
-      alert("Room Added Successfully");
+      swal({
+        title: "Room Added Successfully",
+        icon: "success",
+        button: "OK",
+      });
+      setRoomCapacity("");
+      setRoomDescription("");
+      setRoomName("");
+      setRoomPrice("");
+      setRoomNumber("");
+      fetchRoomList();
+
+      
     } else {
       if (parsedData.room_type) {
         alert(parsedData.room_type);
@@ -103,8 +116,18 @@ function App() {
     console.log(parsedData);
 
     if (response.status === 200) {
-      alert("Room Updated Successfully");
+      swal({
+        title: "Room Updated Successfully",
+        icon: "success",
+        button: "OK",
+      });
+      setRoomCapacity("");
+      setRoomDescription("");
+      setRoomName("");
+      setRoomPrice("");
+      setRoomNumber("");
       fetchRoomList();
+      closeModal();
       window.location.reload();
     } 
 
@@ -120,8 +143,12 @@ function App() {
     console.log(parsedData);
 
     if (response.status === 200) {
-      alert("Room Deleted Successfully");
-      fetchRoomList();
+      swal({
+        title: "Room Deleted Successfully",
+        icon: "success",
+        button: "OK",
+      });
+      fetchRoomList();  
       window.location.reload();
     } 
   };
@@ -147,7 +174,7 @@ function App() {
        <Sidebar />
 
         <div className="content">
-          <h2 className="mb-3 text-start">Add Room</h2>
+          <h2 className="mb-3 text-start text-large-bold">Add Room</h2>
 
           <Form>
             <div className="row">
@@ -162,6 +189,7 @@ function App() {
                     placeholder="Enter room name"
                     value={roomName}
                     onChange={(e) => setRoomName(e.target.value)}
+                    
                   />
                 </Form.Group>
               </div>
@@ -249,7 +277,7 @@ function App() {
             </Button>
           </Form>
 
-          <h2 className="mt-5 mb-3 text-start">Room Details</h2>
+          <h2 className="mt-5 mb-3 text-start text-large-bold">Room Details</h2>
 
           <Table responsive>
             <thead>

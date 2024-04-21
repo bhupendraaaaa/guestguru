@@ -81,11 +81,17 @@ function Home() {
       return;
     } else if (bookingResponse.status === 406) {
       swal({
+
         title: "Booking Unsuccessful!",
         text: "Room is already Booked !",
         icon: "error",
         button: "OK",
       });
+      setCheckIn("");
+      setCheckOut("");
+      setGuestCount("");
+      setRoomType("");
+
       
     } else {
       swal({
@@ -94,8 +100,14 @@ function Home() {
         icon: "error",
         button: "OK",
       });
+      setCheckIn("");
+      setCheckOut("");
+      setGuestCount("");
+      setRoomType("");
+
     }
   };
+
 
   const handleReadMoreClick = () => {
     navigate("/about");
@@ -149,7 +161,7 @@ function Home() {
                     value={room_type}
                     onChange={(e) => setRoomType(e.target.value)}
                   >
-                    <option disabled>Select Room</option>
+                    <option disabled defaultChecked>Select Room</option>
                     <option value="8">Single</option>
                     <option value="4">Double</option>
                     <option value="5">King Sized</option>
