@@ -162,11 +162,12 @@ function Home() {
                     onChange={(e) => setRoomType(e.target.value)}
                   >
                     <option disabled defaultChecked>Select Room</option>
-                    <option value="8">Single</option>
+                    <option value="9">Single Room</option>
                     <option value="4">Double</option>
-                    <option value="5">King Sized</option>
+                    <option value="10">King Sized</option>
                     <option value="11">Deluxe Queen Room</option>
                     <option value="12">Ensuite Room</option>
+                    <option value="24">Standard Room</option>
                   </select>
                 </div>
                 <div className="booking-item">

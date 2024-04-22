@@ -23,16 +23,16 @@ function Description() {
             <div className="container-md">
                 <div className="row mt-5 mb-5">
                     <div className="col">
-                        <img src={room.image} alt="Room" className="img-fluid" />
+                    <img src={room.image} alt="Room" className="img-fluid" style={{ height: '500px' , width: '500px'}} />
                     </div>
                     <div className="col">
                         <h2>{room.room_type}</h2>
                         <p>{room.description}</p>
                         <ul>
-                            <li>Capacity: {room.capacity}</li>
-                            <li>Price: {room.price}</li>
+                        <li style={{ fontSize: '1.5em', fontWeight: 'bold' }}>Capacity: {room.capacity}</li>
+                        <li style={{ fontSize: '1.5em', fontWeight: 'bold' }}>Price: {room.price}</li>
                         </ul>
-                        <button className="btn btn-primary">Book Now</button>
+                        
                     </div>
                 </div>
             </div>

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./Login.css";
 import logoImage from "../Assets/logo192.png";
 import { useNavigate, Link } from "react-router-dom";
+import { Form } from "react-bootstrap";
+import swal from "sweetalert";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -28,9 +30,20 @@ function Login() {
 
     if (loginResponse.status === 200) {
       if (parsedData.role === "admin") {
-        alert("Admin Login Successful");
+        swal({
+          title: "Login Successful",
+          text: "Admin Panel successfully logged in",
+          icon: "success",
+          button: "Ok",
+        });
         navigate("/dashboard");
       } else {
+        swal({
+          title: "Login Successful",
+          text: "You have successfully logged in",
+          icon: "success",
+          button: "Ok",
+        });
         navigate("/");
       }
     } else {
@@ -39,7 +52,12 @@ function Login() {
       } else if (parsedData.password) {
         alert(parsedData.password);
       } else {
-        alert("Invalid Credentials");
+        swal({
+          title: "Login Failed",
+          text: "Invalid Email or Password",
+          icon: "error",
+          button: "Ok",
+        });
       }
     }
   };
@@ -56,11 +74,12 @@ function Login() {
           <div className="text">Login</div>
           <div className="underline"></div>
         </div>
-
+      <Form onSubmit={handleLogin}>
         <div className="inputs">
           <div className="text-field">
             <p>Email</p>
             <input
+              required
               className="design"
               type="text"
               placeholder="Enter Your Email"
@@ -72,6 +91,7 @@ function Login() {
           <div className="text-field">
             <p>Password</p>
             <input
+              required
               className="design"
               type="text"
               placeholder="Enter Your Password"
@@ -80,13 +100,11 @@ function Login() {
             />
           </div>
         </div>
-        <div className="forget-password">
-          Forget Password? <span>Click here</span>
-        </div>
+    
 
         <div className="submit-cointainer">
-          <div className="submit" onClick={handleLogin}>
-            Log In
+          <div className="submit">
+            <input type="submit" value="Login" />
           </div>
         </div>
         <div className="haveaccont">
@@ -95,6 +113,7 @@ function Login() {
             <span>Register</span>
           </Link>
         </div>
+      </Form>
       </div>
     </div>
   );

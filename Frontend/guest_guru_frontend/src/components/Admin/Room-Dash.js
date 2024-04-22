@@ -185,6 +185,7 @@ function App() {
                 >
                   <Form.Label>Room Name</Form.Label>
                   <Form.Control
+                    
                     type="text"
                     placeholder="Enter room name"
                     value={roomName}

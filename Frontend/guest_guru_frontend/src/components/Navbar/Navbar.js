@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import logoImage from "../Assets/logonavbar.png";
-import swal from "sweetalert";
 import { Dropdown } from "react-bootstrap";
+import swal from "sweetalert";
 
 function Navbar() {
   const location = useLocation();
@@ -44,10 +44,10 @@ function Navbar() {
 
   const handleLogout = () => {
     swal({
-      title: "Are you sure to logout?",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
+      title: "Logout",
+      text: "You have been successfully logged out",
+      icon: "success",
+      buttons: "ok",
     }).then((willLogout) => {
       if (willLogout) {
         fetch("http://localhost:8000/logout/", {

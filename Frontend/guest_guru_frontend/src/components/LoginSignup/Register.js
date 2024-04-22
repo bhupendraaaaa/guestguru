@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './Register.css';
 import logoImage from '../Assets/logo192.png';
 import { useNavigate, Link } from 'react-router-dom';
+import swal from 'sweetalert';
+import { Form } from 'react-bootstrap';
 
 function Register() {
   const navigate = useNavigate();
@@ -38,7 +40,12 @@ function Register() {
 
 
     if (registerResponse.status === 201) {
-      alert('Registration Successful');
+      swal({
+        title: "Registration Successful",
+        text: "You have successfully registered",
+        icon: "success",
+        button: "Ok",
+      });
       setFName('');
       setLName('');
       setPhone('');
@@ -50,28 +57,15 @@ function Register() {
     }
 
     else {
-      if (parsedData.email) {
-        alert(parsedData.email);
-      }
-      else if (parsedData.phone) {
-        alert(parsedData.phone);
-      }
-      else if (parsedData.password) {
-        alert(parsedData.password);
-      }
-      else if (parsedData.firstname) {
-        alert(parsedData.firstname);
-      }
-      else if (parsedData.lastname) {
-        alert(parsedData.lastname);
-      }
-      else if (parsedData.address) {
-        alert(parsedData.address);
-      }
-      else
-        alert('Registration Failed');
+        swal({
+          title: "Registration Failed",
+          text: "Please try again",
+          icon: "error",
+          button: "Ok",
+        });
     }
   }
+  
 
 
   return (
@@ -87,50 +81,57 @@ function Register() {
           <div className="text-reg">Register</div>
           <div className="underline-reg"></div>
         </div>
-
+      <Form onSubmit={handleRegister}>
         <div className="inputs-reg">
           <div className='text-field-reg'>
             <div>
               <p>First Name</p>
-              <input className="design-reg" type='text' placeholder='Enter Your First Name' value={fname} onChange={(e) => setFName(e.target.value)} />
+              <input required className="design-reg" type='text' placeholder='Enter Your First Name' value={fname} onChange={(e) => setFName(e.target.value)} />
             </div>
 
             <div>
               <p>Last Name</p>
-              <input className="design-reg" type='text' placeholder='Enter Your Last Name' value={lname} onChange={(e) => setLName(e.target.value)} />
+              <input required className="design-reg" type='text' placeholder='Enter Your Last Name' value={lname} onChange={(e) => setLName(e.target.value)} />
             </div>
           </div>
 
           <div className='text-field-reg'>
             <div>
               <p>Email</p>
-              <input className="design-reg" type='text' placeholder='Enter Your Email' value={email} onChange={(e) => setEmail(e.target.value)} />
+              <input required className="design-reg" type='text' placeholder='Enter Your Email' value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
 
             <div>
               <p>Phone</p>
-              <input className="design-reg" type='text' placeholder='Enter Your Phone' value={phone} onChange={(e) => setPhone(e.target.value)} />
+              <input required className="design-reg" type='text' placeholder='Enter Your Phone' value={phone} onChange={(e) => setPhone(e.target.value)} />
             </div>
           </div>
 
           <div className='text-field-reg'>
             <div>
               <p>Address</p>
-              <input className="design-reg" type='text' placeholder='Enter Your Email' value={address} onChange={(e) => setAddress(e.target.value)} />
+              <input required className="design-reg" type='text' placeholder='Enter Your Email' value={address} onChange={(e) => setAddress(e.target.value)} />
             </div>
 
             <div>
               <p>Password</p>
-              <input className="design-reg" type='text' placeholder='Enter Your Password' value={password} onChange={(e) => setPassword(e.target.value)} />
+              <input required className="design-reg" type='text' placeholder='Enter Your Password' value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
           </div>
         </div>
 
         <div className="register-cointainer">
-          <div className="register" onClick={handleRegister}>
-            Register
+          <div className="register">
+            <input type="submit" value="Register" />
           </div>
         </div>
+        <div className="haveaccount-register">
+          Already have an account?
+          <Link to="/login">
+            <span>Log In</span>
+          </Link>
+        </div>
+      </Form>
       </div>
     </div>
   );
