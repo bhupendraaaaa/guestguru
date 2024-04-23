@@ -14,6 +14,10 @@ function Navbar() {
     "/register",
     "/dashboard",
     "/room_dash",
+    "/booking",
+    "/user",
+    "/facilitites-dash",
+    "/room-dash"
   ].includes(location.pathname);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);

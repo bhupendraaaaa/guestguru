@@ -57,7 +57,7 @@ function Facilitiesdash() {
                 icon: "success",
                 button: "Ok",
             })
-            window.location.reload();
+            
         } else {
             if (parsedData.name) {
                 alert("Facility Name is required");

@@ -274,7 +274,7 @@ function App() {
             </div>
 
             <Button variant="primary" type="submit" onClick={handleRoom}>
-              Submit
+              Add Rooms
             </Button>
           </Form>
 

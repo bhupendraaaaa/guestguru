@@ -50,11 +50,7 @@ function Sidebar() {
         <div className="sidebar">
         <h3 className="sidebar-heading">Admin Panel</h3>
         <ul className="sidebar-menu">
-          <li>
-            <NavLink to="/dashboard" >
-              Dashboard
-            </NavLink>
-          </li>
+          
           <li>
             <NavLink to="/room-dash">Rooms</NavLink>
           </li>

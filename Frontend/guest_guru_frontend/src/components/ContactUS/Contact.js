@@ -53,30 +53,32 @@ function Contact() {
                         <div className="phone">
                             <i className="fas fa-phone-alt"></i>
                             <div className="topic">Phone</div>
-                            <div className="text-one">+0098 9893 5647</div>
-                            <div className="text-two">+0096 3434 5678</div>
+                            <div className="text-one">9864785154</div>
+                            <div className="text-two">9848300000</div>
                         </div>
                         <div className="email-contact">
                             <i className="fas fa-envelope"></i>
                             <div className="topic">Email</div>
-                            <div className="text-one">codinglab@gmail.com</div>
+                            <div className="text-one">guestguru63@gmail.com</div>
                         </div>
                     </div>
                     <div className="right-side">
                         <div className="topic-text">Send us a message</div>
                         <p>If you have any work from me or any types of queries related to my tutorial, you can send me a message from here. It's my pleasure to help you.</p>
-                        <form action="#" ref={form}>
+                        <form action="#" ref={form} 
+                        onSubmit={handleSendEmail}
+                        >
 
                             <div className="contact-field">
                                 <div className='input-box'>
                                     <div>
                                         <p>Full Name</p>
-                                        <input className='design-contact' type="text" placeholder="Enter your Full Name" name='user_name' />
+                                        <input required className='design-contact' type="text" placeholder="Enter your Full Name" name='user_name' />
                                     </div>
 
                                     <div>
                                         <p>Email Address</p>
-                                        <input className='design-contact' type="text" placeholder="Enter your Email" name='user_email'/>
+                                        <input required className='design-contact' type="text" placeholder="Enter your Email" name='user_email'/>
                                     </div>
                                 </div>
                             </div>
@@ -84,19 +86,19 @@ function Contact() {
                             <div className="input-box">
                                 <div className='long'>
                                     <p>Subject</p>
-                                    <input className='design-contact' type="text" placeholder="Subject" name='user_subject' />
+                                    <input required className='design-contact' type="text" placeholder="Subject" name='user_subject' />
                                 </div>
                             </div>
 
                             <div className="input-box">
                                 <div className='long'>
                                     <p>Message</p>
-                                    <input className='design-contact' type="text" placeholder="Message" name='message'/>
+                                    <input required className='design-contact' type="text" placeholder="Message" name='message' />
                                 </div>
                             </div>
 
                             <div className="button">
-                                <input type="button" value="Send Now" onClick={handleSendEmail}/>
+                                <input type="submit" value="Send Now" />
                             </div>
                         </form>
                     </div>

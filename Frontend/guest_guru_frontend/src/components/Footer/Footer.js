@@ -6,7 +6,15 @@ function Footer() {
     const location = useLocation();
 
   // Check if the current route is not login or register
-  const shouldDisplayNavbar = !['/login', '/register', '/dashboard', '/room_dash'].includes(location.pathname);
+  const shouldDisplayNavbar = ![ 
+  "/login",
+  "/register",
+  "/dashboard",
+  "/room_dash",
+  "/booking",
+  "/user",
+  "/facilitites-dash",
+  "/room-dash"].includes(location.pathname);
   return (
     shouldDisplayNavbar && (
     <div>

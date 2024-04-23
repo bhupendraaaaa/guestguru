@@ -134,6 +134,7 @@ body {
     width: 100%;
     margin: 12px 0;
     padding: 20px;
+    
   }
 
   .input-box > div {
@@ -166,18 +167,24 @@ body {
   .button {
     display: inline-block;
     margin-top: 12px;
+    margin: auto;
+
   }
   
-  .button input[type="button"] {
-    color: #fff;
-    font-size: 18px;
-    outline: none;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    background-color: #3e2093;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  .button {
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  height: 50px;
+  color: #fff;
+  background: black;
+  border-radius: 30px;
+  font-size: 20px;
+  font-weight: 400;
+  cursor: pointer;
+  /* margin: auto; */
+    
   }
   
   .button input[type="button"]:hover {

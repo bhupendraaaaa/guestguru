@@ -59,7 +59,7 @@ function Register() {
     else {
         swal({
           title: "Registration Failed",
-          text: "Please try again",
+          text: "Invalid credentials",
           icon: "error",
           button: "Ok",
         });
@@ -103,7 +103,7 @@ function Register() {
 
             <div>
               <p>Phone</p>
-              <input required className="design-reg" type='text' placeholder='Enter Your Phone' value={phone} onChange={(e) => setPhone(e.target.value)} />
+              <input required className="design-reg" type='text' pattern="\d*" placeholder='Enter Your Phone' value={phone} onChange={(e) => setPhone(e.target.value)} />
             </div>
           </div>
 

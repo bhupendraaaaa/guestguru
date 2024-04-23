@@ -142,12 +142,12 @@ function BookingList() {
       <div className='content'>
         <h2 className="mb-3 text-start">Booking List</h2>
 
-        <form>
+        <Form onSubmit={handleBooking}>
           <div className="row">
             <div className="col">
               <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
                 <Form.Label>Room Type</Form.Label>
-                <Form.Control type="text" placeholder="Enter Room Type" value={roomType} onChange={
+                <Form.Control required type="text" placeholder="Enter Room Type" value={roomType} onChange={
                     (e) => setRoomType(e.target.value)
                 } />
               </Form.Group>
@@ -156,7 +156,7 @@ function BookingList() {
             <div className="col">
               <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
                 <Form.Label>Check-In Date </Form.Label>
-                <Form.Control type="date" placeholder="Enter Check-in Date" value={checkInDate} onChange={
+                <Form.Control required type="date" placeholder="Enter Check-in Date" value={checkInDate} onChange={
                     (e) => setCheckInDate(e.target.value)
                 } />
               </Form.Group>
@@ -167,7 +167,7 @@ function BookingList() {
             <div className="col">
               <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
                 <Form.Label>Check-Out Date</Form.Label>
-                <Form.Control type="date" placeholder="Enter-out Date"  value={checkOutDate} onChange={
+                <Form.Control required type="date" placeholder="Enter-out Date"  value={checkOutDate} onChange={
                     (e) => setCheckOutDate(e.target.value)
                 
                 }/>
@@ -177,17 +177,15 @@ function BookingList() {
             <div className="col">
               <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
                 <Form.Label>No. of Guest</Form.Label>
-                <Form.Control type="text" placeholder="Enter Guest Count" value={guestCount} onChange={
+                <Form.Control required type="text" placeholder="Enter Guest Count" value={guestCount} onChange={
                     (e) => setGuestCount(e.target.value)
                 } />
               </Form.Group>
             </div>
           </div>
 
-            <Button variant="primary" type="submit" onClick={handleBooking}>
-                Add Booking
-            </Button>
-        </form>
+            <input type="submit" value="Add Booking" />
+        </Form>
         <h2 className='mt-5 mb-3 text-start'>Booking Details</h2>
         <Table responsive>
             <thead>
